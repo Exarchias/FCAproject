@@ -1,0 +1,98 @@
+require('dotenv').config();
+const path = require('path');
+
+const express = require('express');
+const app = express();
+
+const { router: measurementsRouter } = require('./api/routes/measurements.routes');
+
+app.use(express.static(path.resolve(__dirname, 'dist')));
+
+const { connectToDatabase } = require('./database');
+
+app.get("/", (_, res) => {
+    res.sendFile("index.html");
+});
+
+//for receiving data from firebase
+app.get("/fireget", (_, res) => {
+  getData();
+  res.send(receiveddata);
+});
+
+//for sending the data to the firebase. We will not use that.
+app.post('/fireadd', function (req, res) {  
+  // Prepare output in JSON format  
+  //response = {  
+  //    username:req.body.username,  
+  //};
+  let response = 200;
+  console.log(JSON.stringify(req.body[0])); 
+  //res.send(response); 
+  res.sendStatus(response)
+});
+
+//This will be used because it works.
+app.post('/fireadd2',(req, res) => {
+  console.log("fireadd2 runs");
+  let receiveddata2 = receiveddata;
+  if(receiveddata2.nonarray == null){
+    receiveddata2.nonarray = [];
+  }
+  //receiveddata.nonarray[1] = "test";
+  //receiveddata.nonarray.push(JSON.stringify(req.body[0]));
+  receiveddata2.nonarray.push("test");
+  console.log("reveiveddata2.nonarray: " + receiveddata2.nonarray)
+  console.log("receiveddata2: " + receiveddata2);
+  //addData(JSON.parse(receiveddata));
+  //let testObject = JSON.stringify({testobject:"yolo"})
+  let almObject = JSON.parse('{"almobject":"almyoloyoloyolo", "roll":"data"}')
+  let user = JSON.parse('{"name":"Tester36", "email":"yolo@yolo", "roll":"data"}') //this serves as an example
+  console.log("almobject: " + JSON.stringify(almObject))
+  addData(almObject);
+  console.log("req.body: " + req.body);
+  res.sendStatus(200)
+      //.json({status:"Success", data:{body: req.body })
+}); 
+
+
+
+app.use(measurementsRouter);
+getData();
+
+connectToDatabase()
+    .then(() => {
+        const PORT = process.env.PORT || 8080;
+        app.listen(PORT, () => {
+            console.log('Listening to port ' + PORT);
+        });
+    })
+    .catch((error) => console.error(error));
+
+
+//============ FIREBASE FUNCTIONS ======================================
+
+//Sending data! Adding a json object to the database
+function addData(obj){
+    var oneData=dataRef.child(obj.roll);
+    //var oneData=dataRef.child(obj.sdata);
+    oneData.update(obj,(err)=>{
+    if(err){
+      console.log("Something went wrong" + err)
+    //res2.status(300).json({"msg":"Something went wrong","error":err});
+    }
+    else{
+    //res2.status(200).json({"msg":"user created sucessfully"});
+    console.log("Data was sucessfully sent")
+    }
+    }) }
+  
+  
+  //Fetching data! fetching a json object from the database
+  function getData(){
+    dataRef.once('value',function(snap) {
+      snap.val();
+      receiveddata = {"sdata":snap.val()};
+      console.log("receiveddata and stringify: " + JSON.stringify(receiveddata));
+      })
+  }
