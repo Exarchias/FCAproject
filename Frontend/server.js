@@ -1,14 +1,40 @@
 require('dotenv').config();
 const path = require('path');
+const admin=require('firebase-admin'); //For firebase
 
 const express = require('express');
 const app = express();
+
+//code for parsing starts here ==========
+const bodyParser  = require('body-parser');
+const cors = require("cors");
+const multer = require('multer')
+
+// Middlewares for fireadd2
+app.use(cors({ origin: 'http://localhost:8000', }))
+app.use(express.json())
+app.use(express.urlencoded({ extended: true }))
+app.use(multer().array()); 
+//code for parsing ends here =============
 
 const { router: measurementsRouter } = require('./api/routes/measurements.routes');
 
 app.use(express.static(path.resolve(__dirname, 'dist')));
 
 const { connectToDatabase } = require('./database');
+
+// ============= Code for firebase STARTS here ===============================
+var serviceAccount = require('./admin.json'); //don't forget to always have the admin.json key file in the correct place
+admin.initializeApp({
+credential: admin.credential.cert(serviceAccount),
+databaseURL: "https://fir-37e91-default-rtdb.europe-west1.firebasedatabase.app",
+authDomain: "fir-37e91.firebaseapp.com",
+});
+var db=admin.database();
+//var userRef=db.ref("users"); //that was from the example
+var dataRef=db.ref("sdata"); //we are using that
+var receiveddata; //here is the data stored when received.
+// ============= Code for firebase ENDS here ===============================
 
 app.get("/", (_, res) => {
     res.sendFile("index.html");

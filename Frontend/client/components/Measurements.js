@@ -10,6 +10,72 @@ function Measurements() {
         setData(json);
     }
 
+    async function postMeasurements() {
+    // POST request using fetch with error handling
+    const data2transmitted = {sx:2.1, sy:5.2, dx:2.3, dy:5.4, info:"yolo yolo. many details"}
+    const requestOptions = {
+        method: 'POST',
+        body: JSON.stringify(data2transmitted),
+        headers: { 'Content-Type': 'application/json' },
+    };
+    fetch('/fireadd2', requestOptions)
+        .then(async response => {
+            const isJson = response.headers.get('content-type')?.includes('application/json');
+            const data2 = isJson && await response.json();
+            if(response.ok){
+                console.log("We got an ok!");
+            }
+
+            // check for error response
+            if (!response.ok) {
+                // get error message from body or default to response status
+                const error = (data2 && data2.message) || response.status;
+                return Promise.reject(error);
+                //console.log("error detected")
+            }
+
+            //this.setState({ postId: data.id })
+        })
+        .catch(error => {
+            //this.setState({ errorMessage: error.toString() });
+            console.error('There was an error!', error);
+        });
+    }
+
+
+    //this method posts data which is taken through arguments
+    async function postMeasurements2(vsx, vsy, vdx, vdy, vinfo) {
+        // POST request using fetch with error handling
+        const data2transmitted = {sx:vsx, sy:vsy, dx:vdx, dy:vdy, info:vinfo}
+        const requestOptions = {
+            method: 'POST',
+            body: JSON.stringify(data2transmitted),
+            headers: { 'Content-Type': 'application/json' },
+        };
+        fetch('/fireadd2', requestOptions)
+            .then(async response => {
+                const isJson = response.headers.get('content-type')?.includes('application/json');
+                const data2 = isJson && await response.json();
+                if(response.ok){
+                    console.log("We got an ok!");
+                }
+    
+                // check for error response
+                if (!response.ok) {
+                    // get error message from body or default to response status
+                    const error = (data2 && data2.message) || response.status;
+                    return Promise.reject(error);
+                    //console.log("error detected")
+                }
+    
+                //this.setState({ postId: data.id })
+            })
+            .catch(error => {
+                //this.setState({ errorMessage: error.toString() });
+                console.error('There was an error!', error);
+            });
+        }
+
     return (
         <section>
             <h1>Measurements</h1>
@@ -17,6 +83,7 @@ function Measurements() {
                 {data && JSON.stringify(data, null, 2)}
             </pre>
             <button onClick={fetchMeasurements}>Fetch Data</button>
+            <button onClick={postMeasurements}>Send Data</button>
         </section>
     )
 }
