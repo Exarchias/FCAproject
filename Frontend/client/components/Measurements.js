@@ -12,7 +12,7 @@ function Measurements() {
 
     async function postMeasurements() {
     // POST request using fetch with error handling
-    const data2transmitted = {sx:2.1, sy:5.2, dx:2.3, dy:5.4, info:"yolo yolo. many details"}
+    const data2transmitted = {info:"This single piece of information was givnen by the front end"}
     const requestOptions = {
         method: 'POST',
         body: JSON.stringify(data2transmitted),

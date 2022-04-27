@@ -32,7 +32,7 @@ authDomain: "fir-37e91.firebaseapp.com",
 });
 var db=admin.database();
 //var userRef=db.ref("users"); //that was from the example
-var dataRef=db.ref("sdata"); //we are using that
+var dataRef=db.ref("fcadataTest"); //we are using that
 var receiveddata; //here is the data stored when received.
 // ============= Code for firebase ENDS here ===============================
 
@@ -62,20 +62,28 @@ app.post('/fireadd', function (req, res) {
 app.post('/fireadd2',(req, res) => {
   console.log("fireadd2 runs");
   let receiveddata2 = receiveddata;
-  if(receiveddata2.nonarray == null){
-    receiveddata2.nonarray = [];
-  }
+  //if(receiveddata2.nonarray == null){
+  //  receiveddata2.nonarray = [];
+  //}
   //receiveddata.nonarray[1] = "test";
   //receiveddata.nonarray.push(JSON.stringify(req.body[0]));
-  receiveddata2.nonarray.push("test");
-  console.log("reveiveddata2.nonarray: " + receiveddata2.nonarray)
-  console.log("receiveddata2: " + receiveddata2);
+  //receiveddata2.nonarray.push("test");
+  //console.log("reveiveddata2.nonarray: " + receiveddata2.nonarray)
+  //console.log("receiveddata2: " + receiveddata2);
   //addData(JSON.parse(receiveddata));
   //let testObject = JSON.stringify({testobject:"yolo"})
-  let almObject = JSON.parse('{"almobject":"almyoloyoloyolo", "roll":"data"}')
-  let user = JSON.parse('{"name":"Tester36", "email":"yolo@yolo", "roll":"data"}') //this serves as an example
-  console.log("almobject: " + JSON.stringify(almObject))
-  addData(almObject);
+
+  //Today's date for testing purposes
+  var today = new Date();
+  //var dd = String(today.getDate()).padStart(2, '0');
+  //var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+  //var yyyy = today.getFullYear();
+  //today = mm + '/' + dd + '/' + yyyy;
+  console.log(today);
+  let testObject = JSON.parse('{"info":"Today is:' + today + '", "roll":"data"}')
+  //let user = JSON.parse('{"name":"Tester36", "email":"yolo@yolo", "roll":"data"}') //this serves as an example
+  console.log("testobject: " + JSON.stringify(testObject))
+  addData(testObject);
   console.log("req.body: " + req.body);
   res.sendStatus(200)
       //.json({status:"Success", data:{body: req.body })
@@ -118,7 +126,7 @@ function addData(obj){
   function getData(){
     dataRef.once('value',function(snap) {
       snap.val();
-      receiveddata = {"sdata":snap.val()};
+      receiveddata = {"fcadataTest":snap.val()};
       console.log("receiveddata and stringify: " + JSON.stringify(receiveddata));
       })
   }
