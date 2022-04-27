@@ -2,6 +2,31 @@ import React, { useState } from "react";
 
 function Measurements() {
     const [data, setData] = useState();
+    const [loggedIn, setLoggedIn] = useState();
+    const [isAdmin, setIsAdmin] = useState();
+
+    //Forces a login. for testing and development purposes.
+    async function forceLogin() {
+        setLoggedIn(true);
+    }
+
+    //Forces a logout. for testing and development purposes.
+    //also revokes admin privileges for obvious reasons.
+    async function forceLogout() {
+        setIsAdmin(false);
+        setLoggedIn(false);
+    
+    }
+
+    //Grants admin privileges. for testing and development purposes.
+    async function forceMakeAdmin() {
+        setIsAdmin(true);
+    }
+
+    //Revokes admin privileges. for testing and development purposes.
+    async function forceRevokeAdmin() {
+        setIsAdmin(false);
+    }
 
     async function fetchMeasurements() {
         //const response = await fetch("/api/measurements");
@@ -78,12 +103,21 @@ function Measurements() {
 
     return (
         <section>
-            <h1>Measurements</h1>
+            <h1>Measurements2</h1>
+            <p>
+            {loggedIn ? "You are logged in": "You are NOT logged in"}<br />
+            {isAdmin ? "You are an Admin": "You are NOT an Admin."}
+            </p>
             <pre>
                 {data && JSON.stringify(data, null, 2)}
             </pre>
             <button onClick={fetchMeasurements}>Fetch Data</button>
             <button onClick={postMeasurements}>Send Data</button>
+            <button onClick={forceLogin}>Forced log in</button>
+            <button onClick={forceLogout}>Forced logout</button>
+            <button onClick={forceMakeAdmin}>Be Admin instantly</button>
+            <button onClick={forceRevokeAdmin}>Revoke Admin Privileges forcefully</button>
+
         </section>
     )
 }
