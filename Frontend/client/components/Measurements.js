@@ -2,24 +2,45 @@ import React, { useState } from "react";
 
 function Measurements() {
     const [data, setData] = useState();
-    const [loggedIn, setLoggedIn] = useState();
-    const [isAdmin, setIsAdmin] = useState();
+    const [loggedIn, setLoggedIn] = useState(false); //for access control
+    const [isAdmin, setIsAdmin] = useState(false); //for access control
+    const [errorMessages, setErrorMessages] = useState({}); //for log in mechanism
+    const [isSubmitted, setIsSubmitted] = useState(false); //for log in mechanism. 
+    //we might want to turn isSumbitted false during the logout.
+    //doing so it will help us with the registration.
 
+    //=========== LOGIN MECHANISM AREA CODE STARTS HERE ================================
+
+    //Lavdim put your code here.
+
+    // Generate JSX code for error message
+    const renderErrorMessage = (name) =>
+    name === errorMessages.name && (
+    <div className="error">{errorMessages.message}</div>
+    );
+
+
+    //=========== LOGIN MECHANISM AREA CODE ENDS HERE ================================
+
+
+    //=========== TEST AND LOGOUT AREA CODE ================================
     //Forces a login. for testing and development purposes.
     async function forceLogin() {
         setLoggedIn(true);
     }
 
-    //Forces a logout. for testing and development purposes.
-    //also revokes admin privileges for obvious reasons.
-    async function forceLogout() {
+    //Logout mechanism. Not only for testing. We will keep it.
+    //also it revokes admin privileges for obvious reasons.
+    async function logout() {
         setIsAdmin(false);
         setLoggedIn(false);
     
     }
 
     //Grants admin privileges. for testing and development purposes.
+    //also it logs the user in, fpr obvious reasons
     async function forceMakeAdmin() {
+        setLoggedIn(true);
         setIsAdmin(true);
     }
 
@@ -103,7 +124,7 @@ function Measurements() {
 
     return (
         <section>
-            <h1>Measurements2</h1>
+            <h1>Test and LogOut Area</h1>
             <p>
             {loggedIn ? "You are logged in": "You are NOT logged in"}<br />
             {isAdmin ? "You are an Admin": "You are NOT an Admin."}
@@ -114,9 +135,29 @@ function Measurements() {
             <button onClick={fetchMeasurements}>Fetch Data</button>
             <button onClick={postMeasurements}>Send Data</button>
             <button onClick={forceLogin}>Forced log in</button>
-            <button onClick={forceLogout}>Forced logout</button>
+            <button onClick={logout}>Logout</button>
             <button onClick={forceMakeAdmin}>Be Admin instantly</button>
             <button onClick={forceRevokeAdmin}>Revoke Admin Privileges forcefully</button>
+            <br />
+            <hr />
+            <div className="form">
+            <h1>Login Area</h1>
+     <form>
+       <div className="input-container">
+         <label>Username </label>
+         <input type="text" name="uname" required />
+         {renderErrorMessage("uname")}
+       </div>
+       <div className="input-container">
+         <label>Password </label>
+         <input type="password" name="pass" required />
+         {renderErrorMessage("pass")}
+       </div>
+       <div className="button-container">
+         <input type="submit" />
+       </div>
+     </form>
+   </div>
 
         </section>
     )
