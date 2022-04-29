@@ -2,12 +2,39 @@ import React, { useState } from "react";
 
 function Measurements() {
     const [data, setData] = useState();
+    const [panel, setPanel] = useState("index"); //for changing panel mechanism
     const [loggedIn, setLoggedIn] = useState(false); //for access control
     const [isAdmin, setIsAdmin] = useState(false); //for access control
     const [errorMessages, setErrorMessages] = useState({}); //for log in mechanism
     const [isSubmitted, setIsSubmitted] = useState(false); //for log in mechanism. 
     //we might want to turn isSumbitted false during the logout.
     //doing so it will help us with the registration.
+
+    //========== SWITCHING PANELS MECHANISM STARTS HERE ================================
+    //A super cool mechanism that "changes" pages, (panels) while we are in the same page.
+    async function goToIndex() {
+        setPanel("index");
+    }
+    
+    async function goToLogin() {
+        setPanel("login");
+    }
+
+    async function goToRegistration() {
+        setPanel("registration");
+    }
+
+    //we will probably not use that.
+    async function goToAdminDashboard() {
+        setPanel("dashboard");
+    }
+
+    async function goToAdminPanel() {
+        setPanel("adminpanel");
+    }
+    //========== SWITCHING PANELS MECHANISM ENDS HERE ==================================
+
+
 
     //=========== LOGIN MECHANISM AREA CODE STARTS HERE ================================
 
@@ -138,8 +165,11 @@ function Measurements() {
             <button onClick={logout}>Logout</button>
             <button onClick={forceMakeAdmin}>Be Admin instantly</button>
             <button onClick={forceRevokeAdmin}>Revoke Admin Privileges forcefully</button>
+            <button onClick={goToIndex}>Go to Index</button>
+            <button onClick={goToLogin}>Go to Log In</button>
             <br />
             <hr />
+            <section style={{display: panel =="login" ? 'block' : 'none'}}>
             <div className="form">
             <h1>Login Area</h1>
      <form>
@@ -158,6 +188,7 @@ function Measurements() {
        </div>
      </form>
    </div>
+   </section>
 
         </section>
     )
