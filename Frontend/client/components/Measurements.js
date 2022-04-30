@@ -90,6 +90,7 @@ function Measurements() {
       username: "user2",
       password: "pass2",
       admin: "false"
+
     }
   ];
   
