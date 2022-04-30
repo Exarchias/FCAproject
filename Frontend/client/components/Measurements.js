@@ -5,7 +5,9 @@ function Measurements() {
     const [panel, setPanel] = useState("index"); //for changing panel mechanism
     const [loggedIn, setLoggedIn] = useState(false); //for access control
     const [isAdmin, setIsAdmin] = useState(false); //for access control
+    const [username, setUseranme] = useState("Doe"); //for access control 
     const [errorMessages, setErrorMessages] = useState({}); //for log in mechanism
+    const [errorMessagesReg, setErrorMessagesReg] = useState({}); //for registration mechanism
     const [isSubmitted, setIsSubmitted] = useState(false); //for log in mechanism. 
     //we might want to turn isSumbitted false during the logout.
     //doing so it will help us with the registration.
@@ -25,7 +27,12 @@ function Measurements() {
     }
 
     async function goToRegistration() {
+      if(!loggedIn){
+        setIsSubmitted(false);
         setPanel("registration");
+      } else {
+        setPanel("index");
+      }
     }
 
     //we will probably not use that.
@@ -54,6 +61,7 @@ function Measurements() {
         // Prevent page reload
         event.preventDefault();
 
+        //all the forms are in an aray. loginis 0 reg is 1 etc.
         var { uname, pass } = document.forms[0];
 
   // Find user login info
@@ -61,6 +69,7 @@ function Measurements() {
 
   // Compare user info
   if (userData) {
+    setUseranme(userData.username);
     if (userData.password !== pass.value) {
       // Invalid password
       setErrorMessages({ name: "pass", message: errors.pass });
@@ -74,6 +83,7 @@ function Measurements() {
     }
   } else {
     // Username not found
+    setUseranme("Doe");
     setErrorMessages({ name: "uname", message: errors.uname });
   }
     
@@ -97,18 +107,62 @@ function Measurements() {
     uname: "invalid username",
     pass: "invalid password"
   };
+
+  const errorsReg = {
+    unameReg: "invalid username",
+    passReg: "invalid password"
+  };
   
-
-
-
-
-
     //=========== LOGIN MECHANISM AREA CODE ENDS HERE ================================
+
+
+    //=========== Registration MECHANISM AREA CODE STARTS HERE =======================
+    const renderErrorMessageReg = (name) =>
+    name === errorMessagesReg.name && (
+    <div className="error">{errorMessagesReg.message}</div>
+    );
+
+    const handleSubmitReg = (event) => {
+      // Prevent page reload
+      event.preventDefault();
+
+      //all the forms are in an aray. loginis 0 reg is 1 etc.
+      var { unameReg, passReg } = document.forms[1]; 
+
+// Find user login info
+const userDataReg = database.find((user) => user.username === unameReg.value);
+
+// Compare user info
+if (userDataReg) {
+  setUseranme(userDataReg.username);
+  if (userDataReg.password !== passReg.value) {
+    // Invalid password
+    setErrorMessagesReg({ name: "passReg", message: errorsReg.passReg });
+  } else {
+    if(userDataReg.admin == "true"){
+      setIsAdmin("true");
+    }
+    setLoggedIn(true);
+    setIsSubmitted(true);
+    setPanel("index");
+  }
+} else {
+  // Username not found
+  setUseranme("Doe");
+  setErrorMessagesReg({ name: "unameReg", message: errorsReg.unameReg });
+}
+  
+  };
+
+    //=========== Registration MECHANISM AREA CODE ENDS HERE =======================
+
+
 
 
     //=========== TEST AND LOGOUT AREA CODE ================================
     //Forces a login. for testing and development purposes.
     async function forceLogin() {
+        setIsSubmitted(true);
         setLoggedIn(true);
     }
 
@@ -124,6 +178,7 @@ function Measurements() {
     //Grants admin privileges. for testing and development purposes.
     //also it logs the user in, fpr obvious reasons
     async function forceMakeAdmin() {
+        setIsSubmitted(true);
         setLoggedIn(true);
         setIsAdmin(true);
     }
@@ -210,6 +265,8 @@ function Measurements() {
         <section>
             <h1>Test and LogOut Area</h1>
             <p>
+            You are in the page: {panel}<br />
+            Your name is: {username}<br />
             {loggedIn ? "You are logged in": "You are NOT logged in"}<br />
             {isAdmin ? "You are an Admin": "You are NOT an Admin."}<br />
             {isSubmitted ? "User is in the system" : "user is NOT in the system"}
@@ -225,6 +282,7 @@ function Measurements() {
             <button onClick={forceRevokeAdmin}>Revoke Admin Privileges forcefully</button>
             <button onClick={goToIndex}>Go to Index</button>
             <button onClick={goToLogin}>Go to Log In</button>
+            <button onClick={goToRegistration}>Go to Registration</button>
             <br />
             <hr />
             <section style={{display: panel =="login" ? 'block' : 'none'}}>
@@ -240,6 +298,26 @@ function Measurements() {
          <label>Password </label>
          <input type="password" name="pass" required />
          {renderErrorMessage("pass")}
+       </div>
+       <div className="button-container">
+         <input type="submit" />
+       </div>
+     </form>
+   </div>
+   </section>
+   <section style={{display: panel =="registration" ? 'block' : 'none'}}>
+            <div className="form">
+            <h1>Registration Area</h1>
+     <form onSubmit={handleSubmitReg}>
+       <div className="input-container">
+         <label>Username </label>
+         <input type="text" name="unameReg" required />
+         {renderErrorMessage("unameReg")}
+       </div>
+       <div className="input-container">
+         <label>Password </label>
+         <input type="password" name="passReg" required />
+         {renderErrorMessage("passReg")}
        </div>
        <div className="button-container">
          <input type="submit" />
