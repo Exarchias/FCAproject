@@ -17,7 +17,11 @@ function Measurements() {
     }
     
     async function goToLogin() {
+      if(!loggedIn){
         setPanel("login");
+      } else {
+        setPanel("index");
+      }
     }
 
     async function goToRegistration() {
@@ -46,6 +50,58 @@ function Measurements() {
     <div className="error">{errorMessages.message}</div>
     );
 
+    const handleSubmit = (event) => {
+        // Prevent page reload
+        event.preventDefault();
+
+        var { uname, pass } = document.forms[0];
+
+  // Find user login info
+  const userData = database.find((user) => user.username === uname.value);
+
+  // Compare user info
+  if (userData) {
+    if (userData.password !== pass.value) {
+      // Invalid password
+      setErrorMessages({ name: "pass", message: errors.pass });
+    } else {
+      if(userData.admin == "true"){
+        setIsAdmin("true");
+      }
+      setLoggedIn(true);
+      setIsSubmitted(true);
+      setPanel("index");
+    }
+  } else {
+    // Username not found
+    setErrorMessages({ name: "uname", message: errors.uname });
+  }
+    
+    };
+
+    // User Login info
+  const database = [
+    {
+      username: "user1",
+      password: "pass1",
+      admin: "true"
+    },
+    {
+      username: "user2",
+      password: "pass2",
+      admin: "false"
+    }
+  ];
+  
+  const errors = {
+    uname: "invalid username",
+    pass: "invalid password"
+  };
+  
+
+
+
+
 
     //=========== LOGIN MECHANISM AREA CODE ENDS HERE ================================
 
@@ -61,6 +117,7 @@ function Measurements() {
     async function logout() {
         setIsAdmin(false);
         setLoggedIn(false);
+        setIsSubmitted(false);
     
     }
 
@@ -154,7 +211,8 @@ function Measurements() {
             <h1>Test and LogOut Area</h1>
             <p>
             {loggedIn ? "You are logged in": "You are NOT logged in"}<br />
-            {isAdmin ? "You are an Admin": "You are NOT an Admin."}
+            {isAdmin ? "You are an Admin": "You are NOT an Admin."}<br />
+            {isSubmitted ? "User is in the system" : "user is NOT in the system"}
             </p>
             <pre>
                 {data && JSON.stringify(data, null, 2)}
@@ -172,7 +230,7 @@ function Measurements() {
             <section style={{display: panel =="login" ? 'block' : 'none'}}>
             <div className="form">
             <h1>Login Area</h1>
-     <form>
+     <form onSubmit={handleSubmit}>
        <div className="input-container">
          <label>Username </label>
          <input type="text" name="uname" required />
