@@ -2,6 +2,7 @@ import React, { useState } from "react";
 
 function Measurements() {
     const [data, setData] = useState();
+    const [theUsers, setTheUsers] = useState([]);
     const [panel, setPanel] = useState("index"); //for changing panel mechanism
     const [loggedIn, setLoggedIn] = useState(false); //for access control
     const [isAdmin, setIsAdmin] = useState(false); //for access control
@@ -61,6 +62,23 @@ function Measurements() {
         // Prevent page reload
         event.preventDefault();
 
+        //if the system has no users. the system assigns the hardcoded ones.
+        //setTheUsers(theUsers.push("fuck you!"));
+          
+          //theUsers.push("fuck you!");
+          //console.log("The users: " + theUsers);
+        if(theUsers.length == 0){
+          database.map(obj => {
+            theUsers.push({username: obj.username,
+            password: obj.password,
+            admin: obj.admin});
+            });
+
+          theUsers.map(obj => {
+            console.log("username:" + obj.username + " , password: " + obj.password);
+          });
+        } //end  if(theUsers.length == 0)
+
         //all the forms are in an aray. loginis 0 reg is 1 etc.
         var { uname, pass } = document.forms[0];
 
@@ -90,7 +108,7 @@ function Measurements() {
     };
 
     // User Login info
-  const database = [
+  var database = [
     {
       username: "user1",
       password: "pass1",
@@ -109,7 +127,7 @@ function Measurements() {
   };
 
   const errorsReg = {
-    unameReg: "invalid username",
+    unameReg: "invalid username. User already exists!",
     passReg: "invalid password"
   };
   
@@ -132,24 +150,56 @@ function Measurements() {
 // Find user login info
 const userDataReg = database.find((user) => user.username === unameReg.value);
 
+// =============== Temportary code just for testing
+let usernameTmp = unameReg.value;
+let passTmp = passReg.value;
+let adminTmp = false;
+console.log("username:" + usernameTmp + " pass:" + passTmp + " admin:" + adminTmp)
+// =============== Temportary code ends here
+
 // Compare user info
 if (userDataReg) {
-  setUseranme(userDataReg.username);
-  if (userDataReg.password !== passReg.value) {
-    // Invalid password
-    setErrorMessagesReg({ name: "passReg", message: errorsReg.passReg });
-  } else {
-    if(userDataReg.admin == "true"){
-      setIsAdmin("true");
-    }
-    setLoggedIn(true);
-    setIsSubmitted(true);
-    setPanel("index");
-  }
-} else {
-  // Username not found
-  setUseranme("Doe");
+  setUseranme("Doe"); //unecessary code.
   setErrorMessagesReg({ name: "unameReg", message: errorsReg.unameReg });
+} else {
+  // Username not found. It is a good thing.
+  setUseranme("Doe"); //unecessary code.
+  
+  if(theUsers.length == 0){
+    database.map(obj => {
+      theUsers.push({username: obj.username,
+      password: obj.password,
+      admin: obj.admin});
+      });
+
+  database.push({
+    username: unameReg.value,
+    password: passReg.value,
+    admin: "false"
+  });
+
+
+    theUsers.map(obj => {
+      console.log("username:" + obj.username + " , password: " + obj.password);
+    });
+  } //end  if(theUsers.length == 0)
+
+  theUsers.push({
+    username: unameReg.value,
+    password: passReg.value,
+    admin: "false"
+  });
+
+  //setTheUsers(database); //passes the new user to the collection of the users of the system
+  //setTheUsers(database); //passes the new user to the collection of the users of the system
+
+  console.log(database); //prints the database object that contains the users.
+
+  theUsers.map(obj => {
+    console.log("username:" + obj.username + " , password: " + obj.password);
+  });
+  //console.log("The users: " + theUsers);
+  //setErrorMessagesReg({ name: "unameReg", message: errorsReg.unameReg });
 }
   
   };
