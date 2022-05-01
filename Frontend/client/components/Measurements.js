@@ -6,7 +6,7 @@ function Measurements() {
     const [panel, setPanel] = useState("index"); //for changing panel mechanism
     const [loggedIn, setLoggedIn] = useState(false); //for access control
     const [isAdmin, setIsAdmin] = useState(false); //for access control
-    const [username, setUseranme] = useState("Doe"); //for access control 
+    const [username, setUseranme] = useState("Visitor"); //for access control 
     const [errorMessages, setErrorMessages] = useState({}); //for log in mechanism
     const [errorMessagesReg, setErrorMessagesReg] = useState({}); //for registration mechanism
     const [isSubmitted, setIsSubmitted] = useState(false); //for log in mechanism. 
@@ -83,7 +83,7 @@ function Measurements() {
         var { uname, pass } = document.forms[0];
 
   // Find user login info
-  const userData = database.find((user) => user.username === uname.value);
+  const userData = theUsers.find((user) => user.username === uname.value);
 
   // Compare user info
   if (userData) {
@@ -101,7 +101,7 @@ function Measurements() {
     }
   } else {
     // Username not found
-    setUseranme("Doe");
+    setUseranme("Visitor");
     setErrorMessages({ name: "uname", message: errors.uname });
   }
     
@@ -159,11 +159,11 @@ console.log("username:" + usernameTmp + " pass:" + passTmp + " admin:" + adminTm
 
 // Compare user info
 if (userDataReg) {
-  setUseranme("Doe"); //unecessary code.
+  setUseranme("Visitor"); //unecessary code.
   setErrorMessagesReg({ name: "unameReg", message: errorsReg.unameReg });
 } else {
   // Username not found. It is a good thing.
-  setUseranme("Doe"); //unecessary code.
+  setUseranme("Visitor"); //unecessary code.
   
   if(theUsers.length == 0){
     database.map(obj => {
@@ -171,12 +171,6 @@ if (userDataReg) {
       password: obj.password,
       admin: obj.admin});
       });
-
-  database.push({
-    username: unameReg.value,
-    password: passReg.value,
-    admin: "false"
-  });
 
 
     theUsers.map(obj => {
@@ -212,6 +206,7 @@ if (userDataReg) {
     //=========== TEST AND LOGOUT AREA CODE ================================
     //Forces a login. for testing and development purposes.
     async function forceLogin() {
+        setUseranme("Someone Logged In");
         setIsSubmitted(true);
         setLoggedIn(true);
     }
@@ -219,6 +214,7 @@ if (userDataReg) {
     //Logout mechanism. Not only for testing. We will keep it.
     //also it revokes admin privileges for obvious reasons.
     async function logout() {
+        setUseranme("Visitor");
         setIsAdmin(false);
         setLoggedIn(false);
         setIsSubmitted(false);
@@ -334,6 +330,8 @@ if (userDataReg) {
             <button onClick={goToLogin}>Go to Log In</button>
             <button onClick={goToRegistration}>Go to Registration</button>
             <br />
+            <hr />
+            <h1>THE ACTUAL PAGE</h1>
             <hr />
             <section style={{display: panel =="login" ? 'block' : 'none'}}>
             <div className="form">
