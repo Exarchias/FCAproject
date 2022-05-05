@@ -333,6 +333,13 @@ if (userDataReg) {
             <hr />
             <h1>THE ACTUAL PAGE</h1>
             <hr />
+            <span>Hello {username}</span>
+            {isAdmin ? ", You are an Admin!": "!"}<br />
+            <a onClick={goToIndex} >|Home|</a>
+            <a onClick={goToLogin} style={{display: loggedIn ? 'none' : 'inline'}}>|Login|</a>
+            <a onClick={goToRegistration} style={{display: loggedIn ? 'none' : 'inline'}}>|Register|</a>
+            <a onClick={logout} style={{display: loggedIn ? 'inline' : 'none'}}>|Logout|</a>
+            <br />
             <section style={{display: panel =="login" ? 'block' : 'none'}}>
             <div className="form">
             <h1>Login Area</h1>
