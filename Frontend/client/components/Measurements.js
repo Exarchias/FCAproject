@@ -4,6 +4,7 @@ function Measurements() {
     const [data, setData] = useState();
     const [theUsers, setTheUsers] = useState([]);
     const [panel, setPanel] = useState("index"); //for changing panel mechanism
+    document.title = "Welcome to " + panel; //setting the title
     const [loggedIn, setLoggedIn] = useState(false); //for access control
     const [isAdmin, setIsAdmin] = useState(false); //for access control
     const [username, setUseranme] = useState("Visitor"); //for access control 
@@ -17,6 +18,7 @@ function Measurements() {
     //A super cool mechanism that "changes" pages, (panels) while we are in the same page.
     async function goToIndex() {
         setPanel("index");
+        document.title = "Welcome to " + panel; //setting the title
     }
     
     async function goToLogin() {
@@ -25,6 +27,7 @@ function Measurements() {
       } else {
         setPanel("index");
       }
+      document.title = "Welcome to " + panel; //setting the title
     }
 
     async function goToRegistration() {
@@ -34,15 +37,22 @@ function Measurements() {
       } else {
         setPanel("index");
       }
+      document.title = "Welcome to " + panel; //setting the title
     }
 
     //we will probably not use that.
-    async function goToAdminDashboard() {
+    async function goToUserDashboard() {
         setPanel("dashboard");
+        document.title = "Welcome to " + panel; //setting the title
     }
 
     async function goToAdminPanel() {
+      if(isAdmin){
         setPanel("adminpanel");
+      } else {
+        setPanel("index");
+      }
+      document.title = "Welcome to " + panel; //setting the title
     }
     //========== SWITCHING PANELS MECHANISM ENDS HERE ==================================
 
@@ -307,6 +317,7 @@ if (userDataReg) {
             });
         }
 
+
     return (
         <section>
             <h1>Test and LogOut Area</h1>
@@ -335,10 +346,10 @@ if (userDataReg) {
             <hr />
             <span>Hello {username}</span>
             {isAdmin ? ", You are an Admin!": "!"}<br />
-            <a onClick={goToIndex} >|Home|</a>
-            <a onClick={goToLogin} style={{display: loggedIn ? 'none' : 'inline'}}>|Login|</a>
-            <a onClick={goToRegistration} style={{display: loggedIn ? 'none' : 'inline'}}>|Register|</a>
-            <a onClick={logout} style={{display: loggedIn ? 'inline' : 'none'}}>|Logout|</a>
+            <button onClick={goToIndex}>Home</button>
+            <button onClick={goToLogin} style={{display: loggedIn ? 'none' : 'inline'}}>Log In</button>
+            <button onClick={goToRegistration} style={{display: loggedIn ? 'none' : 'inline'}}>Registration</button>
+            <button onClick={logout} style={{display: loggedIn ? 'inline' : 'none'}}>Logout</button>
             <br />
             <section style={{display: panel =="login" ? 'block' : 'none'}}>
             <div className="form">
