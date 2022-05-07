@@ -54,6 +54,33 @@ function Measurements() {
       }
       document.title = "Welcome to " + panel; //setting the title
     }
+
+    async function goToCreateUser() {
+      if(isAdmin){
+        setPanel("createuser");
+      } else {
+        setPanel("index");
+      }
+      document.title = "Welcome to " + panel; //setting the title
+    }
+
+    async function goToEditUser() {
+      if(isAdmin){
+        setPanel("edituser");
+      } else {
+        setPanel("index");
+      }
+      document.title = "Welcome to " + panel; //setting the title
+    }
+
+    async function goToDeleteUser() {
+      if(isAdmin){
+        setPanel("deleteuser");
+      } else {
+        setPanel("index");
+      }
+      document.title = "Welcome to " + panel; //setting the title
+    }
     //========== SWITCHING PANELS MECHANISM ENDS HERE ==================================
 
 
@@ -228,6 +255,7 @@ if (userDataReg) {
         setIsAdmin(false);
         setLoggedIn(false);
         setIsSubmitted(false);
+        setPanel("index");
     
     }
 
@@ -340,6 +368,7 @@ if (userDataReg) {
             <button onClick={goToIndex}>Go to Index</button>
             <button onClick={goToLogin}>Go to Log In</button>
             <button onClick={goToRegistration}>Go to Registration</button>
+            <button onClick={goToAdminPanel}>Go to Admin Panel</button>
             <br />
             <hr />
             <h1>THE ACTUAL PAGE</h1>
@@ -349,6 +378,7 @@ if (userDataReg) {
             <button onClick={goToIndex}>Home</button>
             <button onClick={goToLogin} style={{display: loggedIn ? 'none' : 'inline'}}>Log In</button>
             <button onClick={goToRegistration} style={{display: loggedIn ? 'none' : 'inline'}}>Registration</button>
+            <button onClick={goToAdminPanel} style={{display: isAdmin ? 'inline' : 'none'}}>Admin Panel</button>
             <button onClick={logout} style={{display: loggedIn ? 'inline' : 'none'}}>Logout</button>
             <br />
             <section style={{display: panel =="login" ? 'block' : 'none'}}>
@@ -390,6 +420,17 @@ if (userDataReg) {
        </div>
      </form>
    </div>
+   </section>
+
+   <section style={{display: panel =="adminpanel" ? 'block' : 'none'}}>
+            <h1>Admin Panel</h1>
+            <hr />
+            <h2 style={{display: isAdmin ? 'none' : 'inline'}}>Dafug Are you doing here man?</h2>
+            <p style={{display: isAdmin ? 'inline' : 'none'}}>Displaying a few users... blah... blah...</p>
+            <br />
+            <button onClick={goToCreateUser} style={{display: isAdmin ? 'inline' : 'none'}}>Create User</button>
+            <button onClick={goToEditUser} style={{display: isAdmin ? 'inline' : 'none'}}>Edit User</button>
+            <button onClick={goToDeleteUser}style={{display: isAdmin ? 'inline' : 'none'}}>Delete User</button>
    </section>
 
         </section>
