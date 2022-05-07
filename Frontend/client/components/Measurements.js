@@ -11,6 +11,7 @@ function Measurements() {
     const [errorMessages, setErrorMessages] = useState({}); //for log in mechanism
     const [errorMessagesReg, setErrorMessagesReg] = useState({}); //for registration mechanism
     const [errorMessagesCre, setErrorMessagesCre] = useState({}); //for Create-User mechanism
+    const [errorMessagesEdi, setErrorMessagesEdi] = useState({}); //for Edit-User mechanism
     const [isSubmitted, setIsSubmitted] = useState(false); //for log in mechanism. 
     //we might want to turn isSumbitted false during the logout.
     //doing so it will help us with the registration.
@@ -186,7 +187,7 @@ function Measurements() {
       var { unameReg, passReg } = document.forms[1]; 
 
 // Find user login info
-const userDataReg = database.find((user) => user.username === unameReg.value);
+const userDataReg = theUsers.find((user) => user.username === unameReg.value);
 
 // =============== Temportary code just for testing
 let usernameTmp = unameReg.value;
@@ -241,7 +242,7 @@ if (userDataReg) {
 
 
 
-  //=========== CREATE MECHANISM AREA CODE STARTS HERE =======================
+  //=========== CREATE USER MECHANISM AREA CODE STARTS HERE =======================
   const renderErrorMessageCre = (name) =>
   name === errorMessagesCre.name && (
   <div className="error">{errorMessagesCre.message}</div>
@@ -257,12 +258,12 @@ if (userDataReg) {
     var { unameCre, passCre, adminCre } = document.forms[2]; 
 
 // Find user login info
-const userDataCre = database.find((user) => user.username === unameCre.value);
+const userDataCre = theUsers.find((user) => user.username === unameCre.value);
 
 
 // Compare user info
 if (userDataCre) {
-setErrorMessagesReg({ name: "unameCre", message: errorsCre.unameCre });
+setErrorMessagesCre({ name: "unameCre", message: errorsCre.unameCre });
 } else {
 // Username not found. It is a good thing.
 
@@ -282,7 +283,7 @@ if(theUsers.length == 0){
 theUsers.push({
   username: unameCre.value,
   password: passCre.value,
-  admin: adminCre
+  admin: "true"
 });
 
 //setTheUsers(database); //passes the new user to the collection of the users of the system
@@ -303,8 +304,91 @@ theUsers.map(obj => {
 
 }; //handlesubmitCRE ends here
 
+const errorsCre = {
+  unameCre: "invalid username. User already exists!",
+  passCre: "invalid password"
+};
+
   //=========== CREATE USER MECHANISM AREA CODE ENDS HERE =======================
 
+
+
+
+//=========== EDIT USER MECHANISM AREA CODE STARTS HERE =======================
+  const renderErrorMessageEdi = (name) =>
+  name === errorMessagesEdi.name && (
+  <div className="error">{errorMessagesEdi.message}</div>
+  );
+
+  const handleSubmitEdi = (event) => {
+    if(isAdmin){
+      //run the code
+      // Prevent page reload
+    event.preventDefault();
+
+    if(theUsers.length == 0){
+      database.map(obj => {
+        theUsers.push({username: obj.username,
+        password: obj.password,
+        admin: obj.admin});
+        });
+    
+    } //end  if(theUsers.length == 0)
+
+    //all the forms are in an aray. loginis 0 reg is 1, 2 for Create A user 3 for Edit User and 4 for deleting a user
+    var { unameEdi, passEdi, adminEdi } = document.forms[3]; //form 3 for Edit User
+
+// Find user login info
+const userDataEdi = theUsers.find((user) => user.username === unameEdi.value);
+
+
+// Compare user info
+if (userDataEdi) {
+// Username IS found. It is a good thing.
+console.log("The user exists. the edit code runs")
+userDataEdi.password = passEdi.value;
+userDataEdi.admin = "true"; //it gives admin privileges by default until we fix the checkbox thing
+
+theUsers.map(obj => {
+  console.log("username:" + obj.username + " , password: " + obj.password);
+});
+
+
+//theUsers.push({
+  //username: unameEdi.value,
+  //password: passEdi.value,
+  //admin: adminEdi
+//});
+
+
+
+//setTheUsers(database); //passes the new user to the collection of the users of the system
+//setTheUsers(database); //passes the new user to the collection of the users of the system
+
+console.log(database); //prints the database object that contains the users.
+
+theUsers.map(obj => {
+  console.log("username:" + obj.username + " , password: " + obj.password);
+});
+//console.log("The users: " + theUsers);
+//setErrorMessagesReg({ name: "unameReg", message: errorsReg.unameReg });
+} else {
+//user doesn't exist
+setErrorMessagesEdi({ name: "unameEdi", message: errorsEdi.unameEdi });
+}
+    } else {
+      //go to index
+      goToIndex();
+    }
+
+}; //handlesubmitCRE ends here
+
+const errorsEdi = {
+  unameEdi: "invalid username. User Doesn't exist!",
+  passEdi: "invalid password"
+};
+
+  //=========== EDIT USER MECHANISM AREA CODE ENDS HERE =======================
 
 
 
@@ -539,17 +623,21 @@ theUsers.map(obj => {
             <button onClick={goToEditUser} style={{display: isAdmin ? 'inline' : 'none'}}>Edit User</button>
             <button onClick={goToDeleteUser}style={{display: isAdmin ? 'inline' : 'none'}}>Delete User</button>
             <hr />
-     <form onSubmit={handleSubmitReg}>
+     <form onSubmit={handleSubmitEdi}>
        <div className="input-container">
          <label>Username </label>
-         <input type="text" name="unameReg" required />
-         {renderErrorMessage("unameReg")}
+         <input type="text" name="unameEdi" required />
+         {renderErrorMessageEdi("unameEdi")}
        </div>
        <div className="input-container">
          <label>Password </label>
-         <input type="password" name="passReg" required />
-         {renderErrorMessage("passReg")}
+         <input type="password" name="passEdi" required />
+         {renderErrorMessageEdi("passEdi")}
        </div>
+       <div className="input-container">
+       <label>Set Admin </label>
+      <input type="checkbox" name="adminEdi" value="true"/>
+    </div>
        <div className="button-container">
          <input type="submit" />
        </div>
