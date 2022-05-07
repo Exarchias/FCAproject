@@ -433,6 +433,84 @@ if (userDataReg) {
             <button onClick={goToDeleteUser}style={{display: isAdmin ? 'inline' : 'none'}}>Delete User</button>
    </section>
 
+   <section style={{display: panel =="createuser" ? 'block' : 'none'}}>
+            <div className="form">
+            <h1>Create a User</h1>
+            <h3>This is an admin panel function</h3>
+            <button onClick={goToCreateUser} style={{display: isAdmin ? 'inline' : 'none'}}>Create User</button>
+            <button onClick={goToEditUser} style={{display: isAdmin ? 'inline' : 'none'}}>Edit User</button>
+            <button onClick={goToDeleteUser}style={{display: isAdmin ? 'inline' : 'none'}}>Delete User</button>
+            <hr />
+     <form onSubmit={handleSubmitReg}>
+       <div className="input-container">
+         <label>Username </label>
+         <input type="text" name="unameReg" required />
+         {renderErrorMessage("unameReg")}
+       </div>
+       <div className="input-container">
+         <label>Password </label>
+         <input type="password" name="passReg" required />
+         {renderErrorMessage("passReg")}
+       </div>
+       <div className="button-container">
+         <input type="submit" />
+       </div>
+     </form>
+   </div>
+   </section>
+
+   <section style={{display: panel =="edituser" ? 'block' : 'none'}}>
+            <div className="form">
+            <h1>Edit a User</h1>
+            <h3>This is an admin panel function</h3>
+            <button onClick={goToCreateUser} style={{display: isAdmin ? 'inline' : 'none'}}>Create User</button>
+            <button onClick={goToEditUser} style={{display: isAdmin ? 'inline' : 'none'}}>Edit User</button>
+            <button onClick={goToDeleteUser}style={{display: isAdmin ? 'inline' : 'none'}}>Delete User</button>
+            <hr />
+     <form onSubmit={handleSubmitReg}>
+       <div className="input-container">
+         <label>Username </label>
+         <input type="text" name="unameReg" required />
+         {renderErrorMessage("unameReg")}
+       </div>
+       <div className="input-container">
+         <label>Password </label>
+         <input type="password" name="passReg" required />
+         {renderErrorMessage("passReg")}
+       </div>
+       <div className="button-container">
+         <input type="submit" />
+       </div>
+     </form>
+   </div>
+   </section>
+
+   <section style={{display: panel =="deleteuser" ? 'block' : 'none'}}>
+            <div className="form">
+            <h1>Delete a User</h1>
+            <h3>This is an admin panel function</h3>
+            <button onClick={goToCreateUser} style={{display: isAdmin ? 'inline' : 'none'}}>Create User</button>
+            <button onClick={goToEditUser} style={{display: isAdmin ? 'inline' : 'none'}}>Edit User</button>
+            <button onClick={goToDeleteUser}style={{display: isAdmin ? 'inline' : 'none'}}>Delete User</button>
+            <hr />
+     <form onSubmit={handleSubmitReg}>
+       <div className="input-container">
+         <label>Username </label>
+         <input type="text" name="unameReg" required />
+         {renderErrorMessage("unameReg")}
+       </div>
+       <div className="input-container">
+         <label>Password </label>
+         <input type="password" name="passReg" required />
+         {renderErrorMessage("passReg")}
+       </div>
+       <div className="button-container">
+         <input type="submit" />
+       </div>
+     </form>
+   </div>
+   </section>
+
         </section>
     )
 }
