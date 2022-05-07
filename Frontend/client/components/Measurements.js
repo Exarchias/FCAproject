@@ -10,6 +10,7 @@ function Measurements() {
     const [username, setUseranme] = useState("Visitor"); //for access control 
     const [errorMessages, setErrorMessages] = useState({}); //for log in mechanism
     const [errorMessagesReg, setErrorMessagesReg] = useState({}); //for registration mechanism
+    const [errorMessagesCre, setErrorMessagesCre] = useState({}); //for Create-User mechanism
     const [isSubmitted, setIsSubmitted] = useState(false); //for log in mechanism. 
     //we might want to turn isSumbitted false during the logout.
     //doing so it will help us with the registration.
@@ -235,7 +236,74 @@ if (userDataReg) {
   
   };
 
-    //=========== Registration MECHANISM AREA CODE ENDS HERE =======================
+  //=========== Registration MECHANISM AREA CODE ENDS HERE =======================
+
+
+
+
+  //=========== CREATE MECHANISM AREA CODE STARTS HERE =======================
+  const renderErrorMessageCre = (name) =>
+  name === errorMessagesCre.name && (
+  <div className="error">{errorMessagesCre.message}</div>
+  );
+
+  const handleSubmitCre = (event) => {
+    if(isAdmin){
+      //run the code
+      // Prevent page reload
+    event.preventDefault();
+
+    //all the forms are in an aray. loginis 0 reg is 1 etc.
+    var { unameCre, passCre, adminCre } = document.forms[2]; 
+
+// Find user login info
+const userDataCre = database.find((user) => user.username === unameCre.value);
+
+
+// Compare user info
+if (userDataCre) {
+setErrorMessagesReg({ name: "unameCre", message: errorsCre.unameCre });
+} else {
+// Username not found. It is a good thing.
+
+if(theUsers.length == 0){
+  database.map(obj => {
+    theUsers.push({username: obj.username,
+    password: obj.password,
+    admin: obj.admin});
+    });
+
+
+  theUsers.map(obj => {
+    console.log("username:" + obj.username + " , password: " + obj.password);
+  });
+} //end  if(theUsers.length == 0)
+
+theUsers.push({
+  username: unameCre.value,
+  password: passCre.value,
+  admin: adminCre
+});
+
+//setTheUsers(database); //passes the new user to the collection of the users of the system
+//setTheUsers(database); //passes the new user to the collection of the users of the system
+
+console.log(database); //prints the database object that contains the users.
+
+theUsers.map(obj => {
+  console.log("username:" + obj.username + " , password: " + obj.password);
+});
+//console.log("The users: " + theUsers);
+//setErrorMessagesReg({ name: "unameReg", message: errorsReg.unameReg });
+}
+    } else {
+      //go to index
+      goToIndex();
+    }
+
+}; //handlesubmitCRE ends here
+
+  //=========== CREATE USER MECHANISM AREA CODE ENDS HERE =======================
 
 
 
@@ -441,17 +509,21 @@ if (userDataReg) {
             <button onClick={goToEditUser} style={{display: isAdmin ? 'inline' : 'none'}}>Edit User</button>
             <button onClick={goToDeleteUser}style={{display: isAdmin ? 'inline' : 'none'}}>Delete User</button>
             <hr />
-     <form onSubmit={handleSubmitReg}>
+     <form onSubmit={handleSubmitCre}>
        <div className="input-container">
          <label>Username </label>
-         <input type="text" name="unameReg" required />
-         {renderErrorMessage("unameReg")}
+         <input type="text" name="unameCre" required />
+         {renderErrorMessage("unameCre")}
        </div>
        <div className="input-container">
          <label>Password </label>
-         <input type="password" name="passReg" required />
-         {renderErrorMessage("passReg")}
+         <input type="password" name="passCre" required />
+         {renderErrorMessage("passCre")}
        </div>
+       <div className="input-container">
+       <label>Set Admin </label>
+      <input type="checkbox" name="adminCre" value="true"/>
+    </div>
        <div className="button-container">
          <input type="submit" />
        </div>
