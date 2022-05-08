@@ -249,24 +249,7 @@ if (userDataReg) {
   <div className="error">{errorMessagesCre.message}</div>
   );
 
-  const handleSubmitCre = (event) => {
-    if(isAdmin){
-      //run the code
-      // Prevent page reload
-    event.preventDefault();
-
-    //all the forms are in an aray. loginis 0 reg is 1 etc.
-    var { unameCre, passCre, adminCre } = document.forms[2]; 
-
-// Find user login info
-const userDataCre = theUsers.find((user) => user.username === unameCre.value);
-
-
-// Compare user info
-if (userDataCre) {
-setErrorMessagesCre({ name: "unameCre", message: errorsCre.unameCre });
-} else {
-// Username not found. It is a good thing.
+ 
 
 if(theUsers.length == 0){
   database.map(obj => {
@@ -312,6 +295,17 @@ const errorsCre = {
 
   //=========== CREATE USER MECHANISM AREA CODE ENDS HERE =======================
 
+
+// Compare user info
+if (userDataEdi) {
+  // Username IS found. It is a good thing.
+  console.log("The user exists. the edit code runs")
+  userDataEdi.password = passEdi.value;
+  userDataEdi.admin = "true"; //it gives admin privileges by default until we fix the checkbox thing
+  
+  theUsers.map(obj => {
+    console.log("username:" + obj.username + " , password: " + obj.password);
+  });
 
 
 
@@ -555,6 +549,18 @@ const errorsDel = {
             body: JSON.stringify(data2transmitted),
             headers: { 'Content-Type': 'application/json' },
         };
+
+        // Compare user info
+if (userDataEdi) {
+  // Username IS found. It is a good thing.
+  console.log("The user exists. the edit code runs")
+  userDataEdi.password = passEdi.value;
+  userDataEdi.admin = "true"; //it gives admin privileges by default until we fix the checkbox thing
+  
+  theUsers.map(obj => {
+    console.log("username:" + obj.username + " , password: " + obj.password);
+  });
+
         fetch('/fireadd2', requestOptions)
             .then(async response => {
                 const isJson = response.headers.get('content-type')?.includes('application/json');
@@ -662,16 +668,13 @@ const errorsDel = {
             <h2 style={{display: isAdmin ? 'none' : 'inline'}}>Dafug Are you doing here man?</h2>
             <p style={{display: isAdmin ? 'inline' : 'none'}}>Displaying a few users... blah... blah...</p>
             <br />
-            <button onClick={goToCreateUser} style={{display: isAdmin ? 'inline' : 'none'}}>Create User</button>
-            <button onClick={goToEditUser} style={{display: isAdmin ? 'inline' : 'none'}}>Edit User</button>
-            <button onClick={goToDeleteUser}style={{display: isAdmin ? 'inline' : 'none'}}>Delete User</button>
+            
    </section>
 
    <section style={{display: panel =="createuser" ? 'block' : 'none'}}>
             <div className="form">
             <h1>Create a User</h1>
             <h3>This is an admin panel function</h3>
-            <button onClick={goToCreateUser} style={{display: isAdmin ? 'inline' : 'none'}}>Create User</button>
             <button onClick={goToEditUser} style={{display: isAdmin ? 'inline' : 'none'}}>Edit User</button>
             <button onClick={goToDeleteUser}style={{display: isAdmin ? 'inline' : 'none'}}>Delete User</button>
             <hr />
@@ -701,9 +704,7 @@ const errorsDel = {
             <div className="form">
             <h1>Edit a User</h1>
             <h3>This is an admin panel function</h3>
-            <button onClick={goToCreateUser} style={{display: isAdmin ? 'inline' : 'none'}}>Create User</button>
-            <button onClick={goToEditUser} style={{display: isAdmin ? 'inline' : 'none'}}>Edit User</button>
-            <button onClick={goToDeleteUser}style={{display: isAdmin ? 'inline' : 'none'}}>Delete User</button>
+            
             <hr />
      <form onSubmit={handleSubmitEdi}>
        <div className="input-container">
@@ -730,10 +731,7 @@ const errorsDel = {
    <section style={{display: panel =="deleteuser" ? 'block' : 'none'}}>
             <div className="form">
             <h1>Delete a User</h1>
-            <h3>This is an admin panel function</h3>
-            <button onClick={goToCreateUser} style={{display: isAdmin ? 'inline' : 'none'}}>Create User</button>
-            <button onClick={goToEditUser} style={{display: isAdmin ? 'inline' : 'none'}}>Edit User</button>
-            <button onClick={goToDeleteUser}style={{display: isAdmin ? 'inline' : 'none'}}>Delete User</button>
+          
             <hr />
      <form onSubmit={handleSubmitDel}>
        <div className="input-container">
