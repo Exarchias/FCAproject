@@ -12,6 +12,7 @@ function Measurements() {
     const [errorMessagesReg, setErrorMessagesReg] = useState({}); //for registration mechanism
     const [errorMessagesCre, setErrorMessagesCre] = useState({}); //for Create-User mechanism
     const [errorMessagesEdi, setErrorMessagesEdi] = useState({}); //for Edit-User mechanism
+    const [errorMessagesDel, setErrorMessagesDel] = useState({}); //for Edit-User mechanism
     const [isSubmitted, setIsSubmitted] = useState(false); //for log in mechanism. 
     //we might want to turn isSumbitted false during the logout.
     //doing so it will help us with the registration.
@@ -392,6 +393,87 @@ const errorsEdi = {
 
 
 
+
+  //=========== DELETE USER MECHANISM AREA CODE STARTS HERE =======================
+  const renderErrorMessageDel = (name) =>
+  name === errorMessagesDel.name && (
+  <div className="error">{errorMessagesDel.message}</div>
+  );
+
+  const handleSubmitDel = (event) => {
+    if(isAdmin){
+      //run the code
+      // Prevent page reload
+    event.preventDefault();
+
+    if(theUsers.length == 0){
+      database.map(obj => {
+        theUsers.push({username: obj.username,
+        password: obj.password,
+        admin: obj.admin});
+        });
+    
+    } //end  if(theUsers.length == 0)
+
+    //all the forms are in an aray. loginis 0 reg is 1, 2 for Create A user 3 for Edit User and 4 for deleting a user
+    var { unameDel } = document.forms[4]; //form 4 for Delete User
+
+// Find user login info
+const userDataDel = theUsers.find((user) => user.username === unameDel.value);
+
+
+// Compare user info
+if (userDataDel) {
+// Username IS found. It is a good thing.
+console.log("The user exists. the delete code runs");
+theUsers.map(obj => {
+  if(obj.username === unameDel.value){
+    delete obj.username;
+    delete obj.password;
+    delete obj.admin;
+  }
+});
+
+
+//theUsers.push({
+  //username: unameEdi.value,
+  //password: passEdi.value,
+  //admin: adminEdi
+//});
+
+
+
+//setTheUsers(database); //passes the new user to the collection of the users of the system
+//setTheUsers(database); //passes the new user to the collection of the users of the system
+
+console.log(database); //prints the database object that contains the users.
+
+theUsers.map(obj => {
+  console.log("username:" + obj.username + " , password: " + obj.password);
+});
+//console.log("The users: " + theUsers);
+//setErrorMessagesReg({ name: "unameReg", message: errorsReg.unameReg });
+} else {
+//user doesn't exist
+setErrorMessagesDel({ name: "unameDel", message: errorsDel.unameDel });
+}
+    } else {
+      //go to index
+      goToIndex();
+    }
+
+}; //handlesubmitCRE ends here
+
+const errorsDel = {
+  unameEdi: "invalid username. User Doesn't exist!",
+  passEdi: "invalid password"
+};
+
+  //=========== DELETE USER MECHANISM AREA CODE ENDS HERE =======================
+
+
+
+
     //=========== TEST AND LOGOUT AREA CODE ================================
     //Forces a login. for testing and development purposes.
     async function forceLogin() {
@@ -653,17 +735,13 @@ const errorsEdi = {
             <button onClick={goToEditUser} style={{display: isAdmin ? 'inline' : 'none'}}>Edit User</button>
             <button onClick={goToDeleteUser}style={{display: isAdmin ? 'inline' : 'none'}}>Delete User</button>
             <hr />
-     <form onSubmit={handleSubmitReg}>
+     <form onSubmit={handleSubmitDel}>
        <div className="input-container">
          <label>Username </label>
-         <input type="text" name="unameReg" required />
-         {renderErrorMessage("unameReg")}
+         <input type="text" name="unameDel" required />
+         {renderErrorMessageDel("unameDel")}
        </div>
-       <div className="input-container">
-         <label>Password </label>
-         <input type="password" name="passReg" required />
-         {renderErrorMessage("passReg")}
-       </div>
+
        <div className="button-container">
          <input type="submit" />
        </div>
