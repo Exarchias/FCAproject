@@ -3,6 +3,8 @@ import React, { useState } from "react";
 function Measurements() {
     const [data, setData] = useState();
     const [theUsers, setTheUsers] = useState([]);
+    const [loggedUser, setLoggedUser] = useState({username:"Visitor"}); //The user that is logged in
+    const [userInFocus, setUserInFocus] = useState({username:"Visitor"}); //The same as logged user apart when admin works in god mode.
     const [panel, setPanel] = useState("index"); //for changing panel mechanism
     document.title = "Welcome to " + panel; //setting the title
     const [loggedIn, setLoggedIn] = useState(false); //for access control
@@ -160,6 +162,8 @@ function Measurements() {
       }
       setLoggedIn(true);
       setIsSubmitted(true);
+      setLoggedUser(userData);
+      setUserInFocus(userData);
       setPanel("index");
     }
   } else {
@@ -502,6 +506,10 @@ const errorsDel = {
 
     async function forceLogin() {
         setUseranme("Someone Logged In");
+        setLoggedUser({username:"dummyuser"});
+      setUserInFocus({username:"dummyuser"});
+        setIsAdmin(false);
+        setLoggedIn(false);
         setIsSubmitted(true);
         setLoggedIn(true);
     }
@@ -513,6 +521,8 @@ const errorsDel = {
         setIsAdmin(false);
         setLoggedIn(false);
         setIsSubmitted(false);
+        setLoggedUser({username:"Visitor"});
+      setUserInFocus({username:"Visitor"});
         setPanel("index");
     
     }
@@ -520,8 +530,12 @@ const errorsDel = {
     //Grants admin privileges. for testing and development purposes.
     //also it logs the user in, fpr obvious reasons
     async function forceMakeAdmin() {
+      if(!loggedIn){
+        setLoggedUser({username:"dummyadmin"});
+      setUserInFocus({username:"dummyadmin"});
+      setLoggedIn(true);
+      }
         setIsSubmitted(true);
-        setLoggedIn(true);
         setIsAdmin(true);
     }
 
@@ -610,6 +624,8 @@ const errorsDel = {
             <p>
             You are in the page: {panel}<br />
             Your name is: {username}<br />
+            The logged In user is: {(loggedUser != null)  ? loggedUser.username : ""}<br />
+            The logged user in focus is: {(userInFocus != null) ? userInFocus.username : ""}<br />
             {loggedIn ? "You are logged in": "You are NOT logged in"}<br />
             {isAdmin ? "You are an Admin": "You are NOT an Admin."}<br />
             {isSubmitted ? "User is in the system" : "user is NOT in the system"}
