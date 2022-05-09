@@ -700,13 +700,12 @@ const errorsDel = {
    <section style={{display: panel =="adminpanel" ? 'block' : 'none'}}>
             <h1>Admin Panel</h1>
             <hr />
-            <AdminPanel />
             <h3>Temportary Display of the Users</h3>
             <ol>
             {theUsers!=null ? theUsers.map((item) => <li>{item.username} </li>):""}
             </ol>
             <h2 style={{display: isAdmin ? 'none' : 'inline'}}>Dafug Are you doing here man?</h2>
-            <p style={{display: isAdmin ? 'inline' : 'none'}}>Displaying a few users... blah... blah...</p>
+            <p style={{display: isAdmin ? 'inline' : 'none'}}>Displaying a few users... blah... blah... </p>
             <br />
             <button onClick={goToCreateUser} style={{display: isAdmin ? 'inline' : 'none'}}>Create User</button>
             <button onClick={goToEditUser} style={{display: isAdmin ? 'inline' : 'none'}}>Edit User</button>
