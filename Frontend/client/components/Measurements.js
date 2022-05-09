@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import AdminPanel from "./AdminPanel";
 
 function Measurements() {
     const [data, setData] = useState();
@@ -699,6 +700,7 @@ const errorsDel = {
    <section style={{display: panel =="adminpanel" ? 'block' : 'none'}}>
             <h1>Admin Panel</h1>
             <hr />
+            <AdminPanel />
             <h3>Temportary Display of the Users</h3>
             <ol>
             {theUsers!=null ? theUsers.map((item) => <li>{item.username} </li>):""}
