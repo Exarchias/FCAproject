@@ -271,240 +271,7 @@ if (userDataReg) {
 
   //=========== Registration MECHANISM AREA CODE ENDS HERE =======================
 
-
-
-
-  //=========== CREATE USER MECHANISM AREA CODE STARTS HERE =======================
-  const renderErrorMessageCre = (name) =>
-  name === errorMessagesCre.name && (
-  <div className="error">{errorMessagesCre.message}</div>
-  );
-
-  const handleSubmitCre = (event) => {
-    if(isAdmin){
-      //run the code
-      // Prevent page reload
-    event.preventDefault();
-
-    //all the forms are in an aray. loginis 0 reg is 1 etc.
-    var { unameCre, passCre, adminCre } = document.forms[2]; 
-
-// Find user login info
-const userDataCre = theUsers.find((user) => user.username === unameCre.value);
-
-
-// Compare user info
-if (userDataCre) {
-setErrorMessagesCre({ name: "unameCre", message: errorsCre.unameCre });
-} else {
-// Username not found. It is a good thing.
-
-if(theUsers.length == 0){
-  database.map(obj => {
-    theUsers.push({username: obj.username,
-    password: obj.password,
-    admin: obj.admin});
-    });
-
-
-  theUsers.map(obj => {
-    console.log("username:" + obj.username + " , password: " + obj.password);
-  });
-} //end  if(theUsers.length == 0)
-
-theUsers.push({
-  username: unameCre.value,
-  password: passCre.value,
-  admin: "true"
-});
-
-//setTheUsers(database); //passes the new user to the collection of the users of the system
-//setTheUsers(database); //passes the new user to the collection of the users of the system
-
-console.log(database); //prints the database object that contains the users.
-
-theUsers.map(obj => {
-  console.log("username:" + obj.username + " , password: " + obj.password);
-});
-//console.log("The users: " + theUsers);
-//setErrorMessagesReg({ name: "unameReg", message: errorsReg.unameReg });
-}
-    } else {
-      //go to index
-      goToIndex();
-    }
-
-}; //handlesubmitCRE ends here
-
-const errorsCre = {
-  unameCre: "invalid username. User already exists!",
-  passCre: "invalid password"
-};
-
-  //=========== CREATE USER MECHANISM AREA CODE ENDS HERE =======================
-
-
-
-
-//=========== EDIT USER MECHANISM AREA CODE STARTS HERE =======================
-  const renderErrorMessageEdi = (name) =>
-  name === errorMessagesEdi.name && (
-  <div className="error">{errorMessagesEdi.message}</div>
-  );
-
-  const handleSubmitEdi = (event) => {
-    if(isAdmin){
-      //run the code
-      // Prevent page reload
-    event.preventDefault();
-
-    if(theUsers.length == 0){
-      database.map(obj => {
-        theUsers.push({username: obj.username,
-        password: obj.password,
-        admin: obj.admin});
-        });
-    
-    } //end  if(theUsers.length == 0)
-
-    //all the forms are in an aray. loginis 0 reg is 1, 2 for Create A user 3 for Edit User and 4 for deleting a user
-    var { unameEdi, passEdi, adminEdi } = document.forms[3]; //form 3 for Edit User
-
-// Find user login info
-const userDataEdi = theUsers.find((user) => user.username === unameEdi.value);
-
-
-// Compare user info
-if (userDataEdi) {
-// Username IS found. It is a good thing.
-console.log("The user exists. the edit code runs")
-userDataEdi.password = passEdi.value;
-userDataEdi.admin = "true"; //it gives admin privileges by default until we fix the checkbox thing
-
-theUsers.map(obj => {
-  console.log("username:" + obj.username + " , password: " + obj.password);
-});
-
-
-//theUsers.push({
-  //username: unameEdi.value,
-  //password: passEdi.value,
-  //admin: adminEdi
-//});
-
-
-
-//setTheUsers(database); //passes the new user to the collection of the users of the system
-//setTheUsers(database); //passes the new user to the collection of the users of the system
-
-console.log(database); //prints the database object that contains the users.
-
-theUsers.map(obj => {
-  console.log("username:" + obj.username + " , password: " + obj.password);
-});
-//console.log("The users: " + theUsers);
-//setErrorMessagesReg({ name: "unameReg", message: errorsReg.unameReg });
-} else {
-//user doesn't exist
-setErrorMessagesEdi({ name: "unameEdi", message: errorsEdi.unameEdi });
-}
-    } else {
-      //go to index
-      goToIndex();
-    }
-
-}; //handlesubmitCRE ends here
-
-const errorsEdi = {
-  unameEdi: "invalid username. User Doesn't exist!",
-  passEdi: "invalid password"
-};
-
-  //=========== EDIT USER MECHANISM AREA CODE ENDS HERE =======================
-
-
-
-
-  //=========== DELETE USER MECHANISM AREA CODE STARTS HERE =======================
-  const renderErrorMessageDel = (name) =>
-  name === errorMessagesDel.name && (
-  <div className="error">{errorMessagesDel.message}</div>
-  );
-
-  const handleSubmitDel = (event) => {
-    if(isAdmin){
-      //run the code
-      // Prevent page reload
-    event.preventDefault();
-
-    if(theUsers.length == 0){
-      database.map(obj => {
-        theUsers.push({username: obj.username,
-        password: obj.password,
-        admin: obj.admin});
-        });
-    
-    } //end  if(theUsers.length == 0)
-
-    //all the forms are in an aray. loginis 0 reg is 1, 2 for Create A user 3 for Edit User and 4 for deleting a user
-    var { unameDel } = document.forms[4]; //form 4 for Delete User
-
-// Find user login info
-const userDataDel = theUsers.find((user) => user.username === unameDel.value);
-
-
-// Compare user info
-if (userDataDel) {
-// Username IS found. It is a good thing.
-console.log("The user exists. the delete code runs");
-theUsers.map(obj => {
-  if(obj.username === unameDel.value){
-    delete obj.username;
-    delete obj.password;
-    delete obj.admin;
-  }
-});
-
-
-//theUsers.push({
-  //username: unameEdi.value,
-  //password: passEdi.value,
-  //admin: adminEdi
-//});
-
-
-
-//setTheUsers(database); //passes the new user to the collection of the users of the system
-//setTheUsers(database); //passes the new user to the collection of the users of the system
-
-console.log(database); //prints the database object that contains the users.
-
-theUsers.map(obj => {
-  console.log("username:" + obj.username + " , password: " + obj.password);
-});
-//console.log("The users: " + theUsers);
-//setErrorMessagesReg({ name: "unameReg", message: errorsReg.unameReg });
-} else {
-//user doesn't exist
-setErrorMessagesDel({ name: "unameDel", message: errorsDel.unameDel });
-}
-    } else {
-      //go to index
-      goToIndex();
-    }
-
-}; //handlesubmitCRE ends here
-
-const errorsDel = {
-  unameEdi: "invalid username. User Doesn't exist!",
-  passEdi: "invalid password"
-};
-
-  //=========== DELETE USER MECHANISM AREA CODE ENDS HERE =======================
-
-
-
-
+  
     //=========== TEST AND LOGOUT AREA CODE ================================
 
 
@@ -699,59 +466,15 @@ const errorsDel = {
      </form>
    </div>
    </section>
-
-   <section style={{display: panel =="adminpanel" ? 'block' : 'none'}}>
-            <h1>Admin Panel</h1>
-            <hr />
-            <h3>Temportary Display of the Users</h3>
-            <ol>
-            {theUsers!=null ? theUsers.map((item) => <li>{item.username} </li>):""}
-            </ol>
-            <h2 style={{display: isAdmin ? 'none' : 'inline'}}>Dafug Are you doing here man?</h2>
-            <p style={{display: isAdmin ? 'inline' : 'none'}}>Displaying a few users... blah... blah... </p>
-            <br />
-            <button onClick={goToCreateUser} style={{display: isAdmin ? 'inline' : 'none'}}>Create User</button>
-            <button onClick={goToEditUser} style={{display: isAdmin ? 'inline' : 'none'}}>Edit User</button>
-            <button onClick={goToDeleteUser}style={{display: isAdmin ? 'inline' : 'none'}}>Delete User</button>
-            <AdminPanel isAdmin = {isAdmin} 
+   <section style={{display: panel =="adminpanel" ? 'block' : 'none'}}>   
+   <AdminPanel isAdmin = {isAdmin} 
             theUsers = {theUsers} 
             goToCreateUser = {goToCreateUser} 
-            goToEditUser = {goToCreateUser}
+            goToEditUser = {goToEditUser}
             goToDeleteUser = {goToDeleteUser} 
             />
    </section>
 
-   <section style={{display: panel =="createuser" ? 'block' : 'none'}}>
-            <div className="form">
-            <h1>Create a User</h1>
-            <h3>This is an admin panel function</h3>
-            <button onClick={goToEditUser} style={{display: isAdmin ? 'inline' : 'none'}}>Edit User</button>
-            <button onClick={goToDeleteUser}style={{display: isAdmin ? 'inline' : 'none'}}>Delete User</button>
-            <hr />
-            <h3>Temportary Display of the Users</h3>
-            <ol>
-            {theUsers!=null ? theUsers.map((item) => <li>{item.username} </li>):""}
-            </ol>
-     <form onSubmit={handleSubmitCre}>
-       <div className="input-container">
-         <label>Username </label>
-         <input type="text" name="unameCre" required />
-         {renderErrorMessage("unameCre")}
-       </div>
-       <div className="input-container">
-         <label>Password </label>
-         <input type="password" name="passCre" required />
-         {renderErrorMessage("passCre")}
-       </div>
-       <div className="input-container">
-       <label>Set Admin </label>
-      <input type="checkbox" name="adminCre" value="true"/>
-    </div>
-       <div className="button-container">
-         <input type="submit" />
-       </div>
-     </form>
-   </div>
    <CreateUser loggedUser = {loggedUser} 
             userInFocus = {userInFocus} 
             panel = {panel} 
@@ -771,39 +494,7 @@ const errorsDel = {
             goToEditUser = {goToEditUser} 
             goToDeleteUser = {goToDeleteUser}
              />
-   </section>
 
-   <section style={{display: panel =="edituser" ? 'block' : 'none'}}>
-            <div className="form">
-            <h1>Edit a User</h1>
-            <h3>This is an admin panel function</h3>
-            <button onClick={goToCreateUser} style={{display: isAdmin ? 'inline' : 'none'}}>Create User</button>
-            <button onClick={goToDeleteUser}style={{display: isAdmin ? 'inline' : 'none'}}>Delete User</button>
-            <hr />
-            <h3>Temportary Display of the Users</h3>
-            <ol>
-            {theUsers!=null ? theUsers.map((item) => <li>{item.username} </li>):""}
-            </ol>
-     <form onSubmit={handleSubmitEdi}>
-       <div className="input-container">
-         <label>Username </label>
-         <input type="text" name="unameEdi" required />
-         {renderErrorMessageEdi("unameEdi")}
-       </div>
-       <div className="input-container">
-         <label>Password </label>
-         <input type="password" name="passEdi" required />
-         {renderErrorMessageEdi("passEdi")}
-       </div>
-       <div className="input-container">
-       <label>Set Admin </label>
-      <input type="checkbox" name="adminEdi" value="true"/>
-    </div>
-       <div className="button-container">
-         <input type="submit" />
-       </div>
-     </form>
-   </div>
    <EditUser  loggedUser = {loggedUser} 
             userInFocus = {userInFocus} 
             panel = {panel} 
@@ -821,53 +512,28 @@ const errorsDel = {
             setIsSubmitted = {setIsSubmitted}
             database = {database}
             goToCreateUser = {goToCreateUser} 
-            goToDeleteUser = {goToDeleteUser}/>
-   </section>
-
-   <section style={{display: panel =="deleteuser" ? 'block' : 'none'}}>
-            <div className="form">
-            <h1>Delete a User</h1>
-            <h3>This is an admin panel function</h3>
-            <button onClick={goToCreateUser} style={{display: isAdmin ? 'inline' : 'none'}}>Create User</button>
-            <button onClick={goToEditUser} style={{display: isAdmin ? 'inline' : 'none'}}>Edit User</button>
-            <hr />
-            <h3>Temportary Display of the Users</h3>
-            <ol>
-            {theUsers!=null ? theUsers.map((item) => <li>{item.username} </li>):""}
-            </ol>
-     <form onSubmit={handleSubmitDel}>
-       <div className="input-container">
-         <label>Username </label>
-         <input type="text" name="unameDel" required />
-         {renderErrorMessageDel("unameDel")}
-       </div>
-
-       <div className="button-container">
-         <input type="submit" />
-       </div>
-     </form>
-   </div>
-   </section>
+            goToDeleteUser = {goToDeleteUser}
+            />
    <DeleteUser 
-    loggedUser = {loggedUser} 
-    userInFocus = {userInFocus} 
-    panel = {panel} 
-    loggedIn = {loggedIn} 
-    isAdmin = {isAdmin} 
-    username = {username} 
-    theUsers = {theUsers}
-    errorMessages = {errorMessages} 
-    errorMessagesDel = {errorMessagesDel}  
-    isSubmitted = {isSubmitted} 
-    setUserInFocus = {setUserInFocus} 
-    setPanel = {setPanel} 
-    setErrorMessages = {setErrorMessages} 
-    setErrorMessagesDel = {setErrorMessagesDel}  
-    setIsSubmitted = {setIsSubmitted}
-    database = {database}
-    goToCreateUser = {goToCreateUser} 
-    goToEditUser = {goToEditUser}
-   />
+            loggedUser = {loggedUser} 
+            userInFocus = {userInFocus} 
+            panel = {panel} 
+            loggedIn = {loggedIn} 
+            isAdmin = {isAdmin} 
+            username = {username} 
+            theUsers = {theUsers}
+            errorMessages = {errorMessages} 
+            errorMessagesDel = {errorMessagesDel}  
+            isSubmitted = {isSubmitted} 
+            setUserInFocus = {setUserInFocus} 
+            setPanel = {setPanel} 
+            setErrorMessages = {setErrorMessages} 
+            setErrorMessagesDel = {setErrorMessagesDel}  
+            setIsSubmitted = {setIsSubmitted}
+            database = {database}
+            goToCreateUser = {goToCreateUser} 
+            goToEditUser = {goToEditUser}
+            />
         </section>
     )
 }

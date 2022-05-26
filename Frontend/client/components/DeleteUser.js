@@ -38,10 +38,10 @@ if (userDataDel) {
 console.log("The user exists. the delete code runs");
 prop.theUsers.map(obj => {
 if(obj.username === unameDel2){
-    obj = null;
-  //delete obj.username;
-  //delete obj.password;
-  //delete obj.admin;
+    //obj = null;
+  delete obj.username;
+  delete obj.password;
+  delete obj.admin;
 }
 });
 

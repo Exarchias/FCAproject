@@ -20,8 +20,6 @@ function AdminPanel(props) {
             <button onClick={props.goToEditUser} style={{display: props.isAdmin ? 'inline' : 'none'}}>Edit User</button>
             <button onClick={props.goToDeleteUser}style={{display: props.isAdmin ? 'inline' : 'none'}}>Delete User</button>
             <hr />
-            <h1>Inderpendent components</h1>
-            <hr />
         </div>
     )
 
