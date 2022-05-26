@@ -466,22 +466,16 @@ if (userDataReg) {
      </form>
    </div>
    </section>
-   <section style={{display: panel =="adminpanel" ? 'block' : 'none'}}>   
+   <section style={{display: isAdmin ? 'block' : 'none'}}>   
    <AdminPanel isAdmin = {isAdmin} 
             theUsers = {theUsers} 
             goToCreateUser = {goToCreateUser} 
             goToEditUser = {goToEditUser}
             goToDeleteUser = {goToDeleteUser} 
-            />
-   </section>
-
-   <CreateUser loggedUser = {loggedUser} 
             userInFocus = {userInFocus} 
             panel = {panel} 
             loggedIn = {loggedIn} 
-            isAdmin = {isAdmin} 
             username = {username} 
-            theUsers = {theUsers}
             errorMessages = {errorMessages} 
             errorMessagesCre = {errorMessagesCre}  
             isSubmitted = {isSubmitted} 
@@ -491,49 +485,14 @@ if (userDataReg) {
             setErrorMessagesCre = {setErrorMessagesCre}  
             setIsSubmitted = {setIsSubmitted}
             database = {database}
-            goToEditUser = {goToEditUser} 
-            goToDeleteUser = {goToDeleteUser}
-             />
-
-   <EditUser  loggedUser = {loggedUser} 
-            userInFocus = {userInFocus} 
-            panel = {panel} 
-            loggedIn = {loggedIn} 
-            isAdmin = {isAdmin} 
-            username = {username} 
-            theUsers = {theUsers}
-            errorMessages = {errorMessages} 
-            errorMessagesEdi = {errorMessagesEdi}  
-            isSubmitted = {isSubmitted} 
-            setUserInFocus = {setUserInFocus} 
-            setPanel = {setPanel} 
-            setErrorMessages = {setErrorMessages} 
-            setErrorMessagesEdi = {setErrorMessagesEdi}  
-            setIsSubmitted = {setIsSubmitted}
-            database = {database}
-            goToCreateUser = {goToCreateUser} 
-            goToDeleteUser = {goToDeleteUser}
-            />
-   <DeleteUser 
             loggedUser = {loggedUser} 
-            userInFocus = {userInFocus} 
-            panel = {panel} 
-            loggedIn = {loggedIn} 
-            isAdmin = {isAdmin} 
-            username = {username} 
-            theUsers = {theUsers}
-            errorMessages = {errorMessages} 
+            errorMessagesEdi = {errorMessagesEdi}  
+            setErrorMessagesEdi = {setErrorMessagesEdi}
             errorMessagesDel = {errorMessagesDel}  
-            isSubmitted = {isSubmitted} 
-            setUserInFocus = {setUserInFocus} 
-            setPanel = {setPanel} 
-            setErrorMessages = {setErrorMessages} 
-            setErrorMessagesDel = {setErrorMessagesDel}  
-            setIsSubmitted = {setIsSubmitted}
-            database = {database}
-            goToCreateUser = {goToCreateUser} 
-            goToEditUser = {goToEditUser}
+            setErrorMessagesDel = {setErrorMessagesDel} 
             />
+   </section>
+
         </section>
     )
 }
