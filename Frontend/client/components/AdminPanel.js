@@ -1,5 +1,5 @@
-import React, { useState } from 'react'
-import Measurements from './Measurements';
+import React, { useState } from 'react';
+import CreateUser from './CreateUser';
 
 function AdminPanel(props) {
 
@@ -19,6 +19,9 @@ function AdminPanel(props) {
             <button onClick={props.goToCreateUser} style={{display: props.isAdmin ? 'inline' : 'none'}}>Create User</button>
             <button onClick={props.goToEditUser} style={{display: props.isAdmin ? 'inline' : 'none'}}>Edit User</button>
             <button onClick={props.goToDeleteUser}style={{display: props.isAdmin ? 'inline' : 'none'}}>Delete User</button>
+            <hr />
+            <h1>Inderpendent components</h1>
+            <hr />
         </div>
     )
 
