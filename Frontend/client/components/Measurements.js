@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import AdminPanel from "./AdminPanel";
 import CreateUser from "./CreateUser";
+import DeleteUser from "./DeleteUser";
 import EditUser from "./EditUser";
 
 function Measurements() {
@@ -819,7 +820,7 @@ const errorsDel = {
             setErrorMessagesEdi = {setErrorMessagesEdi}  
             setIsSubmitted = {setIsSubmitted}
             database = {database}
-            goToEditUser = {goToCreateUser} 
+            goToCreateUser = {goToCreateUser} 
             goToDeleteUser = {goToDeleteUser}/>
    </section>
 
@@ -847,7 +848,26 @@ const errorsDel = {
      </form>
    </div>
    </section>
-
+   <DeleteUser 
+    loggedUser = {loggedUser} 
+    userInFocus = {userInFocus} 
+    panel = {panel} 
+    loggedIn = {loggedIn} 
+    isAdmin = {isAdmin} 
+    username = {username} 
+    theUsers = {theUsers}
+    errorMessages = {errorMessages} 
+    errorMessagesDel = {errorMessagesDel}  
+    isSubmitted = {isSubmitted} 
+    setUserInFocus = {setUserInFocus} 
+    setPanel = {setPanel} 
+    setErrorMessages = {setErrorMessages} 
+    setErrorMessagesDel = {setErrorMessagesDel}  
+    setIsSubmitted = {setIsSubmitted}
+    database = {database}
+    goToCreateUser = {goToCreateUser} 
+    goToEditUser = {goToEditUser}
+   />
         </section>
     )
 }
