@@ -1,8 +1,11 @@
 import React, { useState } from "react";
+import AdminPanel from "./AdminPanel";
 
 function Measurements() {
     const [data, setData] = useState();
     const [theUsers, setTheUsers] = useState([]);
+    const [loggedUser, setLoggedUser] = useState({username:"Visitor"}); //The user that is logged in
+    const [userInFocus, setUserInFocus] = useState({username:"Visitor"}); //The same as logged user apart when admin works in god mode.
     const [panel, setPanel] = useState("index"); //for changing panel mechanism
     document.title = "Welcome to " + panel; //setting the title
     const [loggedIn, setLoggedIn] = useState(false); //for access control
@@ -19,12 +22,28 @@ function Measurements() {
 
     //========== SWITCHING PANELS MECHANISM STARTS HERE ================================
     //A super cool mechanism that "changes" pages, (panels) while we are in the same page.
+
+    async function loadTheUsers() {
+      //loading the users
+      if(theUsers.length == 0){
+        database.map(obj => {
+          theUsers.push({username: obj.username,
+          password: obj.password,
+          admin: obj.admin});
+          });
+      
+      } //end  if(theUsers.length == 0)
+  }
+
+
     async function goToIndex() {
+      loadTheUsers();
         setPanel("index");
         document.title = "Welcome to " + panel; //setting the title
     }
     
     async function goToLogin() {
+      loadTheUsers();
       if(!loggedIn){
         setPanel("login");
       } else {
@@ -34,6 +53,7 @@ function Measurements() {
     }
 
     async function goToRegistration() {
+      loadTheUsers();
       if(!loggedIn){
         setIsSubmitted(false);
         setPanel("registration");
@@ -45,12 +65,15 @@ function Measurements() {
 
     //we will probably not use that.
     async function goToUserDashboard() {
+        loadTheUsers();
         setPanel("dashboard");
         document.title = "Welcome to " + panel; //setting the title
     }
 
     async function goToAdminPanel() {
       if(isAdmin){
+        loadTheUsers();
+
         setPanel("adminpanel");
       } else {
         setPanel("index");
@@ -59,6 +82,7 @@ function Measurements() {
     }
 
     async function goToCreateUser() {
+      loadTheUsers();
       if(isAdmin){
         setPanel("createuser");
       } else {
@@ -68,6 +92,7 @@ function Measurements() {
     }
 
     async function goToEditUser() {
+      loadTheUsers();
       if(isAdmin){
         setPanel("edituser");
       } else {
@@ -77,6 +102,7 @@ function Measurements() {
     }
 
     async function goToDeleteUser() {
+      loadTheUsers();
       if(isAdmin){
         setPanel("deleteuser");
       } else {
@@ -137,6 +163,8 @@ function Measurements() {
       }
       setLoggedIn(true);
       setIsSubmitted(true);
+      setLoggedUser(userData);
+      setUserInFocus(userData);
       setPanel("index");
     }
   } else {
@@ -144,32 +172,6 @@ function Measurements() {
     setUseranme("Visitor");
     setErrorMessages({ name: "uname", message: errors.uname });
   }
-
-async function goToLogin() {
-      if(!loggedIn){
-        setPanel("login");
-      } else {
-        setPanel("index");
-      }
-      document.title = "Welcome to " + panel; //setting the title
-    }
-
-    async function goToRegistration() {
-      if(!loggedIn){
-        setIsSubmitted(false);
-        setPanel("registration");
-      } else {
-        setPanel("index");
-      }
-      document.title = "Welcome to " + panel; //setting the title
-    }
-
-    //we will probably not use that.
-    async function goToUserDashboard() {
-        setPanel("dashboard");
-        document.title = "Welcome to " + panel; //setting the title
-    }
-
     
     };
 
@@ -501,9 +503,14 @@ const errorsDel = {
 
 
     //=========== TEST AND LOGOUT AREA CODE ================================
-    //Forces a login. for testing and development purposes.
+
+
     async function forceLogin() {
         setUseranme("Someone Logged In");
+        setLoggedUser({username:"dummyuser"});
+      setUserInFocus({username:"dummyuser"});
+        setIsAdmin(false);
+        setLoggedIn(false);
         setIsSubmitted(true);
         setLoggedIn(true);
     }
@@ -515,6 +522,8 @@ const errorsDel = {
         setIsAdmin(false);
         setLoggedIn(false);
         setIsSubmitted(false);
+        setLoggedUser({username:"Visitor"});
+      setUserInFocus({username:"Visitor"});
         setPanel("index");
     
     }
@@ -522,8 +531,12 @@ const errorsDel = {
     //Grants admin privileges. for testing and development purposes.
     //also it logs the user in, fpr obvious reasons
     async function forceMakeAdmin() {
+      if(!loggedIn){
+        setLoggedUser({username:"dummyadmin"});
+      setUserInFocus({username:"dummyadmin"});
+      setLoggedIn(true);
+      }
         setIsSubmitted(true);
-        setLoggedIn(true);
         setIsAdmin(true);
     }
 
@@ -612,6 +625,8 @@ const errorsDel = {
             <p>
             You are in the page: {panel}<br />
             Your name is: {username}<br />
+            The logged In user is: {(loggedUser != null)  ? loggedUser.username : ""}<br />
+            The logged user in focus is: {(userInFocus != null) ? userInFocus.username : ""}<br />
             {loggedIn ? "You are logged in": "You are NOT logged in"}<br />
             {isAdmin ? "You are an Admin": "You are NOT an Admin."}<br />
             {isSubmitted ? "User is in the system" : "user is NOT in the system"}
@@ -685,12 +700,22 @@ const errorsDel = {
    <section style={{display: panel =="adminpanel" ? 'block' : 'none'}}>
             <h1>Admin Panel</h1>
             <hr />
+            <h3>Temportary Display of the Users</h3>
+            <ol>
+            {theUsers!=null ? theUsers.map((item) => <li>{item.username} </li>):""}
+            </ol>
             <h2 style={{display: isAdmin ? 'none' : 'inline'}}>Dafug Are you doing here man?</h2>
-            <p style={{display: isAdmin ? 'inline' : 'none'}}>Displaying a few users... blah... blah...</p>
+            <p style={{display: isAdmin ? 'inline' : 'none'}}>Displaying a few users... blah... blah... </p>
             <br />
             <button onClick={goToCreateUser} style={{display: isAdmin ? 'inline' : 'none'}}>Create User</button>
             <button onClick={goToEditUser} style={{display: isAdmin ? 'inline' : 'none'}}>Edit User</button>
             <button onClick={goToDeleteUser}style={{display: isAdmin ? 'inline' : 'none'}}>Delete User</button>
+            <AdminPanel isAdmin = {isAdmin} 
+            theUsers = {theUsers} 
+            goToCreateUser = {goToCreateUser} 
+            goToEditUser = {goToCreateUser}
+            goToDeleteUser = {goToDeleteUser} 
+            />
    </section>
 
    <section style={{display: panel =="createuser" ? 'block' : 'none'}}>
@@ -700,6 +725,10 @@ const errorsDel = {
             <button onClick={goToEditUser} style={{display: isAdmin ? 'inline' : 'none'}}>Edit User</button>
             <button onClick={goToDeleteUser}style={{display: isAdmin ? 'inline' : 'none'}}>Delete User</button>
             <hr />
+            <h3>Temportary Display of the Users</h3>
+            <ol>
+            {theUsers!=null ? theUsers.map((item) => <li>{item.username} </li>):""}
+            </ol>
      <form onSubmit={handleSubmitCre}>
        <div className="input-container">
          <label>Username </label>
@@ -729,6 +758,10 @@ const errorsDel = {
             <button onClick={goToCreateUser} style={{display: isAdmin ? 'inline' : 'none'}}>Create User</button>
             <button onClick={goToDeleteUser}style={{display: isAdmin ? 'inline' : 'none'}}>Delete User</button>
             <hr />
+            <h3>Temportary Display of the Users</h3>
+            <ol>
+            {theUsers!=null ? theUsers.map((item) => <li>{item.username} </li>):""}
+            </ol>
      <form onSubmit={handleSubmitEdi}>
        <div className="input-container">
          <label>Username </label>
@@ -758,6 +791,10 @@ const errorsDel = {
             <button onClick={goToCreateUser} style={{display: isAdmin ? 'inline' : 'none'}}>Create User</button>
             <button onClick={goToEditUser} style={{display: isAdmin ? 'inline' : 'none'}}>Edit User</button>
             <hr />
+            <h3>Temportary Display of the Users</h3>
+            <ol>
+            {theUsers!=null ? theUsers.map((item) => <li>{item.username} </li>):""}
+            </ol>
      <form onSubmit={handleSubmitDel}>
        <div className="input-container">
          <label>Username </label>
