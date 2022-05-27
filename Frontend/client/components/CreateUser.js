@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import DisplayUsers from './DisplayUsers';
 
 function CreateUser(prop) {
 
@@ -99,10 +100,10 @@ const errorsCre = {
             <button onClick={prop.goToEditUser} style={{display: prop.isAdmin ? 'inline' : 'none'}}>Edit User</button>
             <button onClick={prop.goToDeleteUser}style={{display: prop.isAdmin ? 'inline' : 'none'}}>Delete User</button>
             <hr />
-            <h3>Temportary Display of the Users</h3>
-            <ol>
-            {prop.theUsers!=null ? prop.theUsers.map((item) => <li>{item.username} </li>):""}
-            </ol>
+            <DisplayUsers 
+        theUsers = {prop.theUsers} 
+        isAdmin = {prop.isAdmin} 
+        />
      <form id="createuser" onSubmit={handleSubmitCre}>
        <div className="input-container">
          <label>Username </label>

@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import DisplayUsers from './DisplayUsers';
 
 function EditUser(prop) {
 
@@ -91,10 +92,10 @@ const errorsEdi = {
             <button onClick={prop.goToCreateUser} style={{display: prop.isAdmin ? 'inline' : 'none'}}>Create User</button>
             <button onClick={prop.goToDeleteUser}style={{display: prop.isAdmin ? 'inline' : 'none'}}>Delete User</button>
             <hr />
-            <h3>Temportary Display of the Users</h3>
-            <ol>
-            {prop.theUsers!=null ? prop.theUsers.map((item) => <li>{item.username} </li>):""}
-            </ol>
+            <DisplayUsers 
+        theUsers = {prop.theUsers} 
+        isAdmin = {prop.isAdmin} 
+        />
      <form id="edituser" onSubmit={handleSubmitEdi}>
        <div className="input-container">
          <label>Username </label>
