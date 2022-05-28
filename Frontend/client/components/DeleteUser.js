@@ -85,7 +85,7 @@ passEdi: "invalid password"
 
     
     return (
-        <section style={{display: prop.panel =="deleteuser" ? 'block' : 'none'}}>
+        <section className='deleteuser' style={{display: prop.panel =="deleteuser" ? 'block' : 'none'}}>
             <div className="form">
             <h1>Delete a User Inderpendently</h1>
             <h3>This is an admin panel function</h3>

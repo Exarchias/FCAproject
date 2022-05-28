@@ -8,8 +8,8 @@ function AdminPanel(props) {
 
     
     return (
-        <section style={{display: props.isAdmin ? 'block' : 'none'}}> 
-        <section style={{display: props.panel =="adminpanel" ? 'block' : 'none'}}> 
+        <section className='adminpanel1' style={{display: props.isAdmin ? 'block' : 'none'}}> 
+        <section className='adminpanel2' style={{display: props.panel =="adminpanel" ? 'block' : 'none'}}> 
         <div>
         <hr />
         <h1>This will be the separate Admin panel!</h1>

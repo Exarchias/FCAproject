@@ -85,7 +85,7 @@ const errorsEdi = {
 
     
     return (
-        <section style={{display: prop.panel =="edituser" ? 'block' : 'none'}}>
+        <section className='edituser' style={{display: prop.panel =="edituser" ? 'block' : 'none'}}>
             <div className="form">
             <h1>Edit a User Inderpendently</h1>
             <h3>This is an admin panel function</h3>

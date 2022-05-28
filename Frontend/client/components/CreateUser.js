@@ -93,7 +93,7 @@ const errorsCre = {
 
     
     return (
-        <section style={{display: prop.panel =="createuser" ? 'block' : 'none'}}>
+        <section className='createuser' style={{display: prop.panel =="createuser" ? 'block' : 'none'}}>
             <div className="form">
             <h1>Create a User Inderpendently</h1>
             <h3>This is an admin panel function</h3>

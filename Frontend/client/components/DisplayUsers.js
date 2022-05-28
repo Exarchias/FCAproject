@@ -6,7 +6,7 @@ function DisplayUsers(prop) {
 
     
     return (
-        <section style={{display: prop.isAdmin ? 'block' : 'none'}}>
+        <section className='displayusers' style={{display: prop.isAdmin ? 'block' : 'none'}}>
             <hr />
             <h3>Display of the Users</h3>
             <ol>
