@@ -9,10 +9,26 @@ function DisplayUsers(prop) {
         <section className='displayusers' style={{display: prop.isAdmin ? 'block' : 'none'}}>
             <hr />
             <h3>Display of the Users</h3>
-            <ol>
-            {prop.theUsers!=null ? prop.theUsers.map((item) => 
-            <li style={{display: item.username!="undefined"? 'block' : 'none'}} >{item.username} </li>):""}
-            </ol>
+            <table>
+<thead>
+  <tr>
+    <th>Username</th>
+    <th>Role</th>
+    <th>Options</th>
+  </tr>
+</thead>
+<tbody>
+{prop.theUsers!=null ? prop.theUsers.map((item) => 
+    <tr style={{display: item.username!="undefined"? 'table-row' : 'none'}}>
+    <td>{item.username}</td>
+    <td>{item.admin == "true"? "Admin" : "User"}</td>
+    <td><button>Delete {item.username}</button><button>Edit {item.username}</button><button>Become {item.username}</button></td>
+  </tr>
+            ):""}
+  
+</tbody>
+</table>
+            
             <hr />
    </section>
     )
