@@ -391,7 +391,7 @@ if (userDataReg) {
 
     return (
         <section>
-            <h1>Test and LogOut Area</h1>
+            <h1 class="h1TestAndLogout">Test and LogOut Area</h1>
             <p>
             You are in the page: {panel}<br />
             Your name is: {username}<br />
@@ -416,7 +416,7 @@ if (userDataReg) {
             <button onClick={goToAdminPanel}>Go to Admin Panel</button>
             <br />
             <hr />
-            <h1>THE ACTUAL PAGE</h1>
+            <h1 class="theactualpage">THE ACTUAL PAGE</h1>
             <hr />
             <span>Hello {username}</span>
             {isAdmin ? ", You are an Admin!": "!"}<br />
