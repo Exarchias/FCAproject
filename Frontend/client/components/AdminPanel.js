@@ -15,7 +15,9 @@ function AdminPanel(props) {
         <h1>This will be the separate Admin panel!</h1>
         <DisplayUsers 
         theUsers = {props.theUsers} 
-        isAdmin = {props.isAdmin} 
+        isAdmin = {props.isAdmin}
+        userInFocus = {props.userInFocus}
+        setUserInFocus = {props.setUserInFocus}  
         />
             <h2 style={{display: props.isAdmin ? 'none' : 'inline'}}>Dafug Are you doing here man?</h2>
             <br />
