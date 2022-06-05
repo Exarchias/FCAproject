@@ -3,6 +3,7 @@ import CreateUser from './CreateUser';
 import DeleteUser from "./DeleteUser";
 import DisplayUsers from './DisplayUsers';
 import EditUser from "./EditUser";
+import EditTheUser from "./EditTheUser";
 
 function AdminPanel(props) {
 
@@ -16,8 +17,11 @@ function AdminPanel(props) {
         <DisplayUsers 
         theUsers = {props.theUsers} 
         isAdmin = {props.isAdmin}
+        userSupervised = {props.userSupervised}
+        setUserSupervised = {props.setUserSupervised} 
         userInFocus = {props.userInFocus}
-        setUserInFocus = {props.setUserInFocus}  
+        setUserInFocus = {props.setUserInFocus} 
+        setPanel = {props.setPanel} 
         />
             <h2 style={{display: props.isAdmin ? 'none' : 'inline'}}>Dafug Are you doing here man?</h2>
             <br />
@@ -45,6 +49,8 @@ function AdminPanel(props) {
         database = {props.database}
         goToEditUser = {props.goToEditUser} 
         goToDeleteUser = {props.goToDeleteUser}
+        userSupervised = {props.userSupervised}
+        setUserSupervised = {props.setUserSupervised}
          />
 
         <EditUser  loggedUser = {props.loggedUser} 
@@ -65,6 +71,30 @@ function AdminPanel(props) {
         database = {props.database}
         goToCreateUser = {props.goToCreateUser} 
         goToDeleteUser = {props.goToDeleteUser}
+        userSupervised = {props.userSupervised}
+        setUserSupervised = {props.setUserSupervised}
+        />
+
+<EditTheUser  loggedUser = {props.loggedUser} 
+        userInFocus = {props.userInFocus} 
+        panel = {props.panel} 
+        loggedIn = {props.loggedIn} 
+        isAdmin = {props.isAdmin} 
+        username = {props.username} 
+        theUsers = {props.theUsers}
+        errorMessages = {props.errorMessages} 
+        errorMessagesEdi = {props.errorMessagesEdi}  
+        isSubmitted = {props.isSubmitted} 
+        setUserInFocus = {props.setUserInFocus} 
+        setPanel = {props.setPanel} 
+        setErrorMessages = {props.setErrorMessages} 
+        setErrorMessagesEdi = {props.setErrorMessagesEdi}  
+        setIsSubmitted = {props.setIsSubmitted}
+        database = {props.database}
+        goToCreateUser = {props.goToCreateUser} 
+        goToDeleteUser = {props.goToDeleteUser}
+        userSupervised = {props.userSupervised}
+        setUserSupervised = {props.setUserSupervised}
         />
 
 <DeleteUser 
@@ -86,6 +116,8 @@ function AdminPanel(props) {
             database = {props.database}
             goToCreateUser = {props.goToCreateUser} 
             goToEditUser = {props.goToEditUser}
+            userSupervised = {props.userSupervised}
+            setUserSupervised = {props.setUserSupervised}
             />
          </section>
     )

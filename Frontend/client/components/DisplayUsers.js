@@ -17,13 +17,15 @@ function DisplayUsers(prop) {
   delete user.admin;
   }
 
-  async function editThe(name) {
-    console.log("Editing " + name + "!");
+  async function editThe(user) {
+    console.log("Editing " + user.username + "!");
+    prop.setUserInFocus(user);
+    prop.setPanel("edittheuser");
   }
 
   async function superviseThe(user) {
     console.log("Supervising " + user.username + "!");
-    prop.setUserInFocus(user);
+    prop.setUserSupervised(user);
   }
 
 
@@ -47,7 +49,7 @@ function DisplayUsers(prop) {
     <td>{item.username}</td>
     <td>{item.admin == "true"? "Admin" : "User"}</td>
     <td><button onClick={() => deleteThe(item)}>Delete {item.username}</button>
-    <button onClick={() => sayHello(item.username)}>Edit {item.username}</button>
+    <button onClick={() => editThe(item)}>Edit {item.username}</button>
     <button onClick={() => superviseThe(item)}>Become {item.username}</button></td>
   </tr>
 ):""}

@@ -8,7 +8,8 @@ function Measurements() {
     const [data, setData] = useState();
     const [theUsers, setTheUsers] = useState([]);
     const [loggedUser, setLoggedUser] = useState({username:"Visitor"}); //The user that is logged in
-    const [userInFocus, setUserInFocus] = useState({username:"Visitor"}); //The same as logged user apart when admin works in god mode.
+    const [userInFocus, setUserInFocus] = useState({username:"Visitor"}); //The same as logged user apart when the user is selected, (eg for edit)
+    const [userSupervised, setUserSupervised] = useState({username:"Visitor"}); //The same as logged user apart when admin works in god mode.
     const [panel, setPanel] = useState("index"); //for changing panel mechanism
     document.title = "Welcome to " + panel; //setting the title
     const [loggedIn, setLoggedIn] = useState(false); //for access control
@@ -279,6 +280,7 @@ if (userDataReg) {
         setUseranme("Someone Logged In");
         setLoggedUser({username:"dummyuser"});
       setUserInFocus({username:"dummyuser"});
+      setUserSupervised({username:"dummyuser"});
         setIsAdmin(false);
         setLoggedIn(false);
         setIsSubmitted(true);
@@ -294,6 +296,7 @@ if (userDataReg) {
         setIsSubmitted(false);
         setLoggedUser({username:"Visitor"});
       setUserInFocus({username:"Visitor"});
+      setUserSupervised({username:"Visitor"});
         setPanel("index");
     
     }
@@ -304,6 +307,7 @@ if (userDataReg) {
       if(!loggedIn){
         setLoggedUser({username:"dummyadmin"});
       setUserInFocus({username:"dummyadmin"});
+      setUserSupervised({username:"dummyadmin"});
       setLoggedIn(true);
       }
         setIsSubmitted(true);
@@ -396,7 +400,8 @@ if (userDataReg) {
             You are in the page: {panel}<br />
             Your name is: {username}<br />
             The logged In user is: {(loggedUser != null)  ? loggedUser.username : ""}<br />
-            The logged user in focus is: {(userInFocus != null) ? userInFocus.username : ""}<br />
+            The supervised user is: {(userInFocus != null) ? userSupervised.username : ""}<br />
+            The user in focus is: {(userInFocus != null) ? userInFocus.username : ""}<br />
             {loggedIn ? "You are logged in": "You are NOT logged in"}<br />
             {isAdmin ? "You are an Admin": "You are NOT an Admin."}<br />
             {isSubmitted ? "User is in the system" : "user is NOT in the system"}
@@ -473,6 +478,7 @@ if (userDataReg) {
             goToEditUser = {goToEditUser}
             goToDeleteUser = {goToDeleteUser} 
             userInFocus = {userInFocus} 
+            userSupervised = {userSupervised}
             panel = {panel} 
             loggedIn = {loggedIn} 
             username = {username} 
@@ -480,6 +486,7 @@ if (userDataReg) {
             errorMessagesCre = {errorMessagesCre}  
             isSubmitted = {isSubmitted} 
             setUserInFocus = {setUserInFocus} 
+            setUserSupervised = {setUserSupervised}
             setPanel = {setPanel} 
             setErrorMessages = {setErrorMessages} 
             setErrorMessagesCre = {setErrorMessagesCre}  

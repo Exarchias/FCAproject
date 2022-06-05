@@ -93,8 +93,13 @@ passEdi: "invalid password"
             <button onClick={prop.goToEditUser} style={{display: prop.isAdmin ? 'inline' : 'none'}}>Edit User</button>
             <hr />
             <DisplayUsers 
+        userInFocus = {prop.userInFocus}
+        setUserInFocus = {prop.setUserInFocus} 
+        userSupervised = {prop.userSupervised}
+        setUserSupervised = {prop.setUserSupervised}
         theUsers = {prop.theUsers} 
         isAdmin = {prop.isAdmin} 
+        setPanel = {prop.setPanel}
         />
      <form id="deleteuser" onSubmit={handleSubmitDel}>
        <div className="input-container">

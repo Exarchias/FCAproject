@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import DisplayUsers from './DisplayUsers';
 
-function EditUser(prop) {
+function EditTheUser(prop) {
 
    //=========== EDIT USER MECHANISM AREA CODE STARTS HERE =======================
   const renderErrorMessageEdi = (name) =>
@@ -85,9 +85,9 @@ const errorsEdi = {
 
     
     return (
-        <section className='edituser' style={{display: prop.panel =="edituser" ? 'block' : 'none'}}>
+        <section className='edittheuser' style={{display: prop.panel =="edittheuser" ? 'block' : 'none'}}>
             <div className="form">
-            <h1>Edit a User Inderpendently</h1>
+            <h1>Edit {prop.userInFocus.username}</h1>
             <h3>This is an admin panel function</h3>
             <button onClick={prop.goToCreateUser} style={{display: prop.isAdmin ? 'inline' : 'none'}}>Create User</button>
             <button onClick={prop.goToDeleteUser}style={{display: prop.isAdmin ? 'inline' : 'none'}}>Delete User</button>
@@ -98,8 +98,8 @@ const errorsEdi = {
         userSupervised = {prop.userSupervised}
         setUserSupervised = {prop.setUserSupervised} 
         theUsers = {prop.theUsers} 
-        isAdmin = {prop.isAdmin} 
-        setPanel = {prop.setPanel}
+        isAdmin = {prop.isAdmin}
+        setPanel = {prop.setPanel} 
         />
      <form id="edituser" onSubmit={handleSubmitEdi}>
        <div className="input-container">
@@ -126,4 +126,4 @@ const errorsEdi = {
 
 }
 
-export default EditUser
+export default EditTheUser

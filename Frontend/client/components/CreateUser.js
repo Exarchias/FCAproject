@@ -101,8 +101,13 @@ const errorsCre = {
             <button onClick={prop.goToDeleteUser}style={{display: prop.isAdmin ? 'inline' : 'none'}}>Delete User</button>
             <hr />
             <DisplayUsers 
+        userInFocus = {prop.userInFocus}
+        setUserInFocus = {prop.setUserInFocus} 
+        userSupervised = {prop.userSupervised}
+        setUserSupervised = {prop.setUserSupervised}
         theUsers = {prop.theUsers} 
         isAdmin = {prop.isAdmin} 
+        setPanel = {prop.setPanel}
         />
      <form id="createuser" onSubmit={handleSubmitCre}>
        <div className="input-container">
