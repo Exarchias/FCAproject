@@ -15,24 +15,14 @@ function EditTheUser(prop) {
       // Prevent page reload
     event.preventDefault();
 
-    if(prop.theUsers.length == 0){
-        prop.database.map(obj => {
-            prop.theUsers.push({username: obj.username,
-        password: obj.password,
-        admin: obj.admin});
-        });
-    
-    } //end  if(theUsers.length == 0)
-
     //all the forms are in an aray. loginis 0 reg is 1, 2 for Create A user 3 for Edit User and 4 for deleting a user
     //var { unameEdi, passEdi, adminEdi } = document.forms[3]; //form 3 for Edit User
 
-    var formi = document.getElementById("edituser"); 
-    var unameEdi2 = formi.unameEdi.value;
+    var formi = document.getElementById("edittheuser"); 
     var passEdi2 = formi.passEdi.value;
 
 // Find user login info
-const userDataEdi = prop.theUsers.find((user) => user.username === unameEdi2);
+const userDataEdi = prop.userInFocus;
 
 
 // Compare user info
@@ -101,10 +91,9 @@ const errorsEdi = {
         isAdmin = {prop.isAdmin}
         setPanel = {prop.setPanel} 
         />
-     <form id="edituser" onSubmit={handleSubmitEdi}>
+     <form id="edittheuser" onSubmit={handleSubmitEdi}>
        <div className="input-container">
-         <label>Username </label>
-         <input type="text" name="unameEdi" required />
+         <label>Username: {prop.userInFocus.username} </label>
          {renderErrorMessageEdi("unameEdi")}
        </div>
        <div className="input-container">
