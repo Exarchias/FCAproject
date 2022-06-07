@@ -4,10 +4,21 @@ body {
 
 
 
-table, th, td {
+table {
     color:white;
-    border: 1px solid white;
+    border-collapse: collapse;
+   /* border: 1px solid white;*/
    /* background-color: #f2e4e4;*/
+  }
+
+  th {
+    color: white;
+    padding: 8px;
+  }
+
+  td{
+    padding: 8px;
+     color: white;
   }
 
   section.displayusers {
@@ -49,6 +60,9 @@ section button{
     text-align: center;
     margin: 5px;
     border-radius: 20px;
+   border: none;
+   text-decoration: none;
+
 }
 
 section h1.theactualpage{
