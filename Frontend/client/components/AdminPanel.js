@@ -25,9 +25,9 @@ function AdminPanel(props) {
         />
             <h2 style={{display: props.isAdmin ? 'none' : 'inline'}}>Dafug Are you doing here man?</h2>
             <br />
-            <button onClick={props.goToCreateUser} style={{display: props.isAdmin ? 'inline' : 'none'}}>Create User</button>
-            <button onClick={props.goToEditUser} style={{display: props.isAdmin ? 'inline' : 'none'}}>Edit User</button>
-            <button onClick={props.goToDeleteUser}style={{display: props.isAdmin ? 'inline' : 'none'}}>Delete User</button>
+            <button onClick={props.goToCreateUser} style={{display: props.isAdmin ? 'inline' : 'none'}}><span>Create User</span></button>
+            <button onClick={props.goToEditUser} style={{display: props.isAdmin ? 'inline' : 'none'}}><span>Edit User</span></button>
+            <button onClick={props.goToDeleteUser}style={{display: props.isAdmin ? 'inline' : 'none'}}><span>Delete User</span></button>
             <hr />
         </div>
         </section>

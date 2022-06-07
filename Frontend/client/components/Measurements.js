@@ -415,31 +415,31 @@ if (userDataReg) {
             <pre>
                 {data && JSON.stringify(data, null, 2)}
             </pre>
-            <button onClick={fetchMeasurements}>Fetch Data</button>
-            <button onClick={postMeasurements}>Send Data</button>
-            <button onClick={forceLogin}>Forced log in</button>
-            <button onClick={logout}>Logout</button>
-            <button onClick={forceMakeAdmin}>Be Admin instantly</button>
-            <button onClick={forceRevokeAdmin}>Revoke Admin Privileges forcefully</button>
-            <button onClick={goToIndex}>Go to Index</button>
-            <button onClick={goToLogin}>Go to Log In</button>
-            <button onClick={goToRegistration}>Go to Registration</button>
-            <button onClick={goToAdminPanel}>Go to Admin Panel</button>
+            <button onClick={fetchMeasurements}><span>Fetch Data</span></button>
+            <button onClick={postMeasurements}><span>Send Data</span></button>
+            <button onClick={forceLogin}><span>Forced log in</span></button>
+            <button onClick={logout}><span>Logout</span></button>
+            <button onClick={forceMakeAdmin}><span>Be Admin instantly</span></button>
+            <button onClick={forceRevokeAdmin}><span>Revoke Admin Privileges forcefully</span></button>
+            <button onClick={goToIndex}><span>Go to Index</span></button>
+            <button onClick={goToLogin}><span>Go to Log In</span></button>
+            <button onClick={goToRegistration}><span>Go to Registration</span></button>
+            <button onClick={goToAdminPanel}><span>Go to Admin Panel</span></button>
             <br />
             <hr />
             <h1 class="theactualpage">THE ACTUAL PAGE</h1>
             <hr />
             <p>
-            <span>Hello {username}</span>
+            <span id="hellousernamespan">Hello {username}</span>
             {isAdmin ? ", You are an Admin!": "!"}<br />
             {loggedUser.username!=userSupervised.username? "You are supervising " + userSupervised.username:""}<br />
             </p>
-            <button onClick={goToIndex}>Home</button>
-            <button onClick={goToLogin} style={{display: loggedIn ? 'none' : 'inline'}}>Log In</button>
-            <button onClick={goToRegistration} style={{display: loggedIn ? 'none' : 'inline'}}>Registration</button>
-            <button onClick={goToAdminPanel} style={{display: isAdmin ? 'inline' : 'none'}}>Admin Panel</button>
-            <button onClick={logout} style={{display: loggedIn ? 'inline' : 'none'}}>Logout</button>
-            <button onClick={stopSupervision} style={{display: loggedUser.username!=userSupervised.username ? 'inline' : 'none'}}>Stop supervising {userSupervised.username}</button>
+            <button onClick={goToIndex}><span>Home</span></button>
+            <button onClick={goToLogin} style={{display: loggedIn ? 'none' : 'inline'}}><span>Log In</span></button>
+            <button onClick={goToRegistration} style={{display: loggedIn ? 'none' : 'inline'}}><span>Registration</span></button>
+            <button onClick={goToAdminPanel} style={{display: isAdmin ? 'inline' : 'none'}}><span>Admin Panel</span></button>
+            <button onClick={logout} style={{display: loggedIn ? 'inline' : 'none'}}><span>Logout</span></button>
+            <button onClick={stopSupervision} style={{display: loggedUser.username!=userSupervised.username ? 'inline' : 'none'}}><span>Stop supervising </span>{userSupervised.username}</button>
             <br />
             <section style={{display: panel =="login" ? 'block' : 'none'}}>
             <div className="form">

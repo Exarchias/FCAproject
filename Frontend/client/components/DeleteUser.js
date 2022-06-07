@@ -89,8 +89,8 @@ passEdi: "invalid password"
             <div className="form">
             <h1>Delete a User Inderpendently</h1>
             <h3>This is an admin panel function</h3>
-            <button onClick={prop.goToCreateUser} style={{display: prop.isAdmin ? 'inline' : 'none'}}>Create User</button>
-            <button onClick={prop.goToEditUser} style={{display: prop.isAdmin ? 'inline' : 'none'}}>Edit User</button>
+            <button onClick={prop.goToCreateUser} style={{display: prop.isAdmin ? 'inline' : 'none'}}><span>Create User</span></button>
+            <button onClick={prop.goToEditUser} style={{display: prop.isAdmin ? 'inline' : 'none'}}><span>Edit User</span></button>
             <hr />
             <DisplayUsers 
         userInFocus = {prop.userInFocus}

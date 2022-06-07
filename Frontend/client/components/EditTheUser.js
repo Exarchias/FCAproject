@@ -79,8 +79,8 @@ const errorsEdi = {
             <div className="form">
             <h1>Edit {prop.userInFocus.username}</h1>
             <h3>This is an admin panel function</h3>
-            <button onClick={prop.goToCreateUser} style={{display: prop.isAdmin ? 'inline' : 'none'}}>Create User</button>
-            <button onClick={prop.goToDeleteUser}style={{display: prop.isAdmin ? 'inline' : 'none'}}>Delete User</button>
+            <button onClick={prop.goToCreateUser} style={{display: prop.isAdmin ? 'inline' : 'none'}}><span>Create User</span></button>
+            <button onClick={prop.goToDeleteUser}style={{display: prop.isAdmin ? 'inline' : 'none'}}><span>Delete User</span></button>
             <hr />
             <DisplayUsers
         userInFocus = {prop.userInFocus}

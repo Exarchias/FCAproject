@@ -97,8 +97,8 @@ const errorsCre = {
             <div className="form">
             <h1>Create a User Inderpendently</h1>
             <h3>This is an admin panel function</h3>
-            <button onClick={prop.goToEditUser} style={{display: prop.isAdmin ? 'inline' : 'none'}}>Edit User</button>
-            <button onClick={prop.goToDeleteUser}style={{display: prop.isAdmin ? 'inline' : 'none'}}>Delete User</button>
+            <button onClick={prop.goToEditUser} style={{display: prop.isAdmin ? 'inline' : 'none'}}><span>Edit User</span></button>
+            <button onClick={prop.goToDeleteUser}style={{display: prop.isAdmin ? 'inline' : 'none'}}><span>Delete User</span></button>
             <hr />
             <DisplayUsers 
         userInFocus = {prop.userInFocus}
