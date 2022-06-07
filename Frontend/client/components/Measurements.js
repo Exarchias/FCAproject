@@ -275,17 +275,23 @@ if (userDataReg) {
   
     //=========== TEST AND LOGOUT AREA CODE ================================
 
+    async function stopSupervision() {
+    setUserInFocus(loggedUser);
+    setUserSupervised(loggedUser);
+  }
+
 
     async function forceLogin() {
-        setUseranme("Someone Logged In");
-        setLoggedUser({username:"dummyuser"});
-      setUserInFocus({username:"dummyuser"});
-      setUserSupervised({username:"dummyuser"});
-        setIsAdmin(false);
-        setLoggedIn(false);
-        setIsSubmitted(true);
-        setLoggedIn(true);
-    }
+      setUseranme("Someone Logged In");
+      setLoggedUser({username:"dummyuser"});
+    setUserInFocus({username:"dummyuser"});
+    setUserSupervised({username:"dummyuser"});
+      setIsAdmin(false);
+      setLoggedIn(false);
+      setIsSubmitted(true);
+      setLoggedIn(true);
+  }
+
 
     //Logout mechanism. Not only for testing. We will keep it.
     //also it revokes admin privileges for obvious reasons.
@@ -423,13 +429,17 @@ if (userDataReg) {
             <hr />
             <h1 class="theactualpage">THE ACTUAL PAGE</h1>
             <hr />
+            <p>
             <span>Hello {username}</span>
             {isAdmin ? ", You are an Admin!": "!"}<br />
+            {loggedUser.username!=userSupervised.username? "You are supervising " + userSupervised.username:""}<br />
+            </p>
             <button onClick={goToIndex}>Home</button>
             <button onClick={goToLogin} style={{display: loggedIn ? 'none' : 'inline'}}>Log In</button>
             <button onClick={goToRegistration} style={{display: loggedIn ? 'none' : 'inline'}}>Registration</button>
             <button onClick={goToAdminPanel} style={{display: isAdmin ? 'inline' : 'none'}}>Admin Panel</button>
             <button onClick={logout} style={{display: loggedIn ? 'inline' : 'none'}}>Logout</button>
+            <button onClick={stopSupervision} style={{display: loggedUser.username!=userSupervised.username ? 'inline' : 'none'}}>Stop supervising {userSupervised.username}</button>
             <br />
             <section style={{display: panel =="login" ? 'block' : 'none'}}>
             <div className="form">

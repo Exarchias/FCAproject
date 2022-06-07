@@ -45,12 +45,13 @@ function DisplayUsers(prop) {
 </thead>
 <tbody>
 {prop.theUsers!=null ? prop.theUsers.map((item) => 
-    <tr style={{display: item.username!="undefined"? 'table-row' : 'none'}}>
-    <td>{item.username}</td>
-    <td>{item.admin == "true"? "Admin" : "User"}</td>
-    <td><button onClick={() => deleteThe(item)}>Delete {item.username}</button>
-    <button onClick={() => editThe(item)}>Edit {item.username}</button>
-    <button onClick={() => superviseThe(item)}>Become {item.username}</button></td>
+    <tr style={{display: item.username!=null? 'table-row' : 'none'}}>
+    <td style={{display: item.username!=null? 'table-cell' : 'none'}}>{item.username}</td>
+    <td style={{display: item.username!=null? 'table-cell' : 'none'}}>{item.admin == "true"? "Admin" : "User"}</td>
+    <td style={{display: item.username!=null? 'table-cell' : 'none'}}>
+    <button style={{display: item.username!=null? 'inline' : 'none'}} onClick={() => deleteThe(item)}>Delete {item.username}</button>
+    <button style={{display: item.username!=null? 'inline' : 'none'}} onClick={() => editThe(item)}>Edit {item.username}</button>
+    <button style={{display: item.username!=null? 'inline' : 'none'}} onClick={() => superviseThe(item)}>Become {item.username}</button></td>
   </tr>
 ):""}
   
