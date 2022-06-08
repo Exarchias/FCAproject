@@ -3,6 +3,7 @@ import AdminPanel from "./AdminPanel";
 import CreateUser from "./CreateUser";
 import DeleteUser from "./DeleteUser";
 import EditUser from "./EditUser";
+import EditTheProfile from "./EditTheProfile";
 
 function Measurements() {
     const [data, setData] = useState();
@@ -105,6 +106,16 @@ function Measurements() {
       document.title = "Welcome to " + panel; //setting the title
     }
 
+    async function goToEditTheProfile() {
+      loadTheUsers();
+      if(loggedIn){
+        setPanel("edittheprofile");
+      } else {
+        setPanel("index");
+      }
+      document.title = "Welcome to " + panel; //setting the title
+    }
+
     async function goToDeleteUser() {
       loadTheUsers();
       if(isAdmin){
@@ -169,6 +180,7 @@ function Measurements() {
       setIsSubmitted(true);
       setLoggedUser(userData);
       setUserInFocus(userData);
+      setUserSupervised(userData);
       setPanel("index");
     }
   } else {
@@ -438,6 +450,7 @@ if (userDataReg) {
             <button onClick={goToLogin} style={{display: loggedIn ? 'none' : 'inline'}}><span>Log In</span></button>
             <button onClick={goToRegistration} style={{display: loggedIn ? 'none' : 'inline'}}><span>Registration</span></button>
             <button onClick={goToAdminPanel} style={{display: isAdmin ? 'inline' : 'none'}}><span>Admin Panel</span></button>
+            <button onClick={goToEditTheProfile} style={{display: loggedIn ? 'inline' : 'none'}}><span>Edit Profile</span></button>
             <button onClick={logout} style={{display: loggedIn ? 'inline' : 'none'}}><span>Logout</span></button>
             <button onClick={stopSupervision} style={{display: loggedUser.username!=userSupervised.username ? 'inline' : 'none'}}><span>Stop supervising </span>{userSupervised.username}</button>
             <br />
@@ -509,6 +522,27 @@ if (userDataReg) {
             setErrorMessagesDel = {setErrorMessagesDel} 
             />
    </section>
+   <EditTheProfile  loggedUser = {loggedUser} 
+        userInFocus = {userInFocus} 
+        panel = {panel} 
+        loggedIn = {loggedIn} 
+        isAdmin = {isAdmin} 
+        username = {username} 
+        theUsers = {theUsers}
+        errorMessages = {errorMessages} 
+        errorMessagesEdi = {errorMessagesEdi}  
+        isSubmitted = {isSubmitted} 
+        setUserInFocus = {setUserInFocus} 
+        setPanel = {setPanel} 
+        setErrorMessages = {setErrorMessages} 
+        setErrorMessagesEdi = {setErrorMessagesEdi}  
+        setIsSubmitted = {setIsSubmitted}
+        database = {database}
+        goToCreateUser = {goToCreateUser} 
+        goToDeleteUser = {goToDeleteUser}
+        userSupervised = {userSupervised}
+        setUserSupervised = {setUserSupervised}
+        />
 
         </section>
     )
