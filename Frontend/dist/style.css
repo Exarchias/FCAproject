@@ -21,6 +21,18 @@ table {
      color: white;
   }
 
+  a{
+    color: white;
+  }
+
+  p{
+    /* I kept the same elements. I just didn't want to remove your code. better to be redudant. */
+      color: white;
+      font-size: 20px;
+        margin: 0;
+        line-height: 25px;
+    }
+
   section.displayusers {
     color: white;
     font-size: 20px;
@@ -32,7 +44,7 @@ section.displayusers li{
     font-size: 15px;
 }
 
-section p{
+section.p{
 /*background-image: linear-gradient(to bottom right, #076DFF, #65a5ff);*/
     /*font-size: 28px;
    line-height: 1.2; */

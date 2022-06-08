@@ -1,8 +1,16 @@
 import React, { useState } from "react";
+import AdminPanel from "./AdminPanel";
+import CreateUser from "./CreateUser";
+import DeleteUser from "./DeleteUser";
+import EditUser from "./EditUser";
+import EditTheProfile from "./EditTheProfile";
 
 function Measurements() {
     const [data, setData] = useState();
     const [theUsers, setTheUsers] = useState([]);
+    const [loggedUser, setLoggedUser] = useState({username:"Visitor"}); //The user that is logged in
+    const [userInFocus, setUserInFocus] = useState({username:"Visitor"}); //The same as logged user apart when the user is selected, (eg for edit)
+    const [userSupervised, setUserSupervised] = useState({username:"Visitor"}); //The same as logged user apart when admin works in god mode.
     const [panel, setPanel] = useState("index"); //for changing panel mechanism
     document.title = "Welcome to " + panel; //setting the title
     const [loggedIn, setLoggedIn] = useState(false); //for access control
@@ -19,12 +27,28 @@ function Measurements() {
 
     //========== SWITCHING PANELS MECHANISM STARTS HERE ================================
     //A super cool mechanism that "changes" pages, (panels) while we are in the same page.
+
+    async function loadTheUsers() {
+      //loading the users
+      if(theUsers.length == 0){
+        database.map(obj => {
+          theUsers.push({username: obj.username,
+          password: obj.password,
+          admin: obj.admin});
+          });
+      
+      } //end  if(theUsers.length == 0)
+  }
+
+
     async function goToIndex() {
+      loadTheUsers();
         setPanel("index");
         document.title = "Welcome to " + panel; //setting the title
     }
     
     async function goToLogin() {
+      loadTheUsers();
       if(!loggedIn){
         setPanel("login");
       } else {
@@ -34,6 +58,7 @@ function Measurements() {
     }
 
     async function goToRegistration() {
+      loadTheUsers();
       if(!loggedIn){
         setIsSubmitted(false);
         setPanel("registration");
@@ -45,12 +70,15 @@ function Measurements() {
 
     //we will probably not use that.
     async function goToUserDashboard() {
+        loadTheUsers();
         setPanel("dashboard");
         document.title = "Welcome to " + panel; //setting the title
     }
 
     async function goToAdminPanel() {
       if(isAdmin){
+        loadTheUsers();
+
         setPanel("adminpanel");
       } else {
         setPanel("index");
@@ -59,6 +87,7 @@ function Measurements() {
     }
 
     async function goToCreateUser() {
+      loadTheUsers();
       if(isAdmin){
         setPanel("createuser");
       } else {
@@ -68,6 +97,7 @@ function Measurements() {
     }
 
     async function goToEditUser() {
+      loadTheUsers();
       if(isAdmin){
         setPanel("edituser");
       } else {
@@ -76,7 +106,18 @@ function Measurements() {
       document.title = "Welcome to " + panel; //setting the title
     }
 
+    async function goToEditTheProfile() {
+      loadTheUsers();
+      if(loggedIn){
+        setPanel("edittheprofile");
+      } else {
+        setPanel("index");
+      }
+      document.title = "Welcome to " + panel; //setting the title
+    }
+
     async function goToDeleteUser() {
+      loadTheUsers();
       if(isAdmin){
         setPanel("deleteuser");
       } else {
@@ -137,6 +178,9 @@ function Measurements() {
       }
       setLoggedIn(true);
       setIsSubmitted(true);
+      setLoggedUser(userData);
+      setUserInFocus(userData);
+      setUserSupervised(userData);
       setPanel("index");
     }
   } else {
@@ -144,32 +188,6 @@ function Measurements() {
     setUseranme("Visitor");
     setErrorMessages({ name: "uname", message: errors.uname });
   }
-
-async function goToLogin() {
-      if(!loggedIn){
-        setPanel("login");
-      } else {
-        setPanel("index");
-      }
-      document.title = "Welcome to " + panel; //setting the title
-    }
-
-    async function goToRegistration() {
-      if(!loggedIn){
-        setIsSubmitted(false);
-        setPanel("registration");
-      } else {
-        setPanel("index");
-      }
-      document.title = "Welcome to " + panel; //setting the title
-    }
-
-    //we will probably not use that.
-    async function goToUserDashboard() {
-        setPanel("dashboard");
-        document.title = "Welcome to " + panel; //setting the title
-    }
-
     
     };
 
@@ -266,247 +284,26 @@ if (userDataReg) {
 
   //=========== Registration MECHANISM AREA CODE ENDS HERE =======================
 
-
-
-
-  //=========== CREATE USER MECHANISM AREA CODE STARTS HERE =======================
-  const renderErrorMessageCre = (name) =>
-  name === errorMessagesCre.name && (
-  <div className="error">{errorMessagesCre.message}</div>
-  );
-
-  const handleSubmitCre = (event) => {
-    if(isAdmin){
-      //run the code
-      // Prevent page reload
-    event.preventDefault();
-
-    //all the forms are in an aray. loginis 0 reg is 1 etc.
-    var { unameCre, passCre, adminCre } = document.forms[2]; 
-
-// Find user login info
-const userDataCre = theUsers.find((user) => user.username === unameCre.value);
-
-
-// Compare user info
-if (userDataCre) {
-setErrorMessagesCre({ name: "unameCre", message: errorsCre.unameCre });
-} else {
-// Username not found. It is a good thing.
-
-if(theUsers.length == 0){
-  database.map(obj => {
-    theUsers.push({username: obj.username,
-    password: obj.password,
-    admin: obj.admin});
-    });
-
-
-  theUsers.map(obj => {
-    console.log("username:" + obj.username + " , password: " + obj.password);
-  });
-} //end  if(theUsers.length == 0)
-
-theUsers.push({
-  username: unameCre.value,
-  password: passCre.value,
-  admin: "true"
-});
-
-//setTheUsers(database); //passes the new user to the collection of the users of the system
-//setTheUsers(database); //passes the new user to the collection of the users of the system
-
-console.log(database); //prints the database object that contains the users.
-
-theUsers.map(obj => {
-  console.log("username:" + obj.username + " , password: " + obj.password);
-});
-//console.log("The users: " + theUsers);
-//setErrorMessagesReg({ name: "unameReg", message: errorsReg.unameReg });
-}
-    } else {
-      //go to index
-      goToIndex();
-    }
-
-}; //handlesubmitCRE ends here
-
-const errorsCre = {
-  unameCre: "invalid username. User already exists!",
-  passCre: "invalid password"
-};
-
-  //=========== CREATE USER MECHANISM AREA CODE ENDS HERE =======================
-
-
-
-
-//=========== EDIT USER MECHANISM AREA CODE STARTS HERE =======================
-  const renderErrorMessageEdi = (name) =>
-  name === errorMessagesEdi.name && (
-  <div className="error">{errorMessagesEdi.message}</div>
-  );
-
-  const handleSubmitEdi = (event) => {
-    if(isAdmin){
-      //run the code
-      // Prevent page reload
-    event.preventDefault();
-
-    if(theUsers.length == 0){
-      database.map(obj => {
-        theUsers.push({username: obj.username,
-        password: obj.password,
-        admin: obj.admin});
-        });
-    
-    } //end  if(theUsers.length == 0)
-
-    //all the forms are in an aray. loginis 0 reg is 1, 2 for Create A user 3 for Edit User and 4 for deleting a user
-    var { unameEdi, passEdi, adminEdi } = document.forms[3]; //form 3 for Edit User
-
-// Find user login info
-const userDataEdi = theUsers.find((user) => user.username === unameEdi.value);
-
-
-// Compare user info
-if (userDataEdi) {
-// Username IS found. It is a good thing.
-console.log("The user exists. the edit code runs")
-userDataEdi.password = passEdi.value;
-userDataEdi.admin = "true"; //it gives admin privileges by default until we fix the checkbox thing
-
-theUsers.map(obj => {
-  console.log("username:" + obj.username + " , password: " + obj.password);
-});
-
-
-//theUsers.push({
-  //username: unameEdi.value,
-  //password: passEdi.value,
-  //admin: adminEdi
-//});
-
-
-
-//setTheUsers(database); //passes the new user to the collection of the users of the system
-//setTheUsers(database); //passes the new user to the collection of the users of the system
-
-console.log(database); //prints the database object that contains the users.
-
-theUsers.map(obj => {
-  console.log("username:" + obj.username + " , password: " + obj.password);
-});
-//console.log("The users: " + theUsers);
-//setErrorMessagesReg({ name: "unameReg", message: errorsReg.unameReg });
-} else {
-//user doesn't exist
-setErrorMessagesEdi({ name: "unameEdi", message: errorsEdi.unameEdi });
-}
-    } else {
-      //go to index
-      goToIndex();
-    }
-
-}; //handlesubmitCRE ends here
-
-const errorsEdi = {
-  unameEdi: "invalid username. User Doesn't exist!",
-  passEdi: "invalid password"
-};
-
-  //=========== EDIT USER MECHANISM AREA CODE ENDS HERE =======================
-
-
-
-
-  //=========== DELETE USER MECHANISM AREA CODE STARTS HERE =======================
-  const renderErrorMessageDel = (name) =>
-  name === errorMessagesDel.name && (
-  <div className="error">{errorMessagesDel.message}</div>
-  );
-
-  const handleSubmitDel = (event) => {
-    if(isAdmin){
-      //run the code
-      // Prevent page reload
-    event.preventDefault();
-
-    if(theUsers.length == 0){
-      database.map(obj => {
-        theUsers.push({username: obj.username,
-        password: obj.password,
-        admin: obj.admin});
-        });
-    
-    } //end  if(theUsers.length == 0)
-
-    //all the forms are in an aray. loginis 0 reg is 1, 2 for Create A user 3 for Edit User and 4 for deleting a user
-    var { unameDel } = document.forms[4]; //form 4 for Delete User
-
-// Find user login info
-const userDataDel = theUsers.find((user) => user.username === unameDel.value);
-
-
-// Compare user info
-if (userDataDel) {
-// Username IS found. It is a good thing.
-console.log("The user exists. the delete code runs");
-theUsers.map(obj => {
-  if(obj.username === unameDel.value){
-    delete obj.username;
-    delete obj.password;
-    delete obj.admin;
-  }
-});
-
-
-//theUsers.push({
-  //username: unameEdi.value,
-  //password: passEdi.value,
-  //admin: adminEdi
-//});
-
-
-
-//setTheUsers(database); //passes the new user to the collection of the users of the system
-//setTheUsers(database); //passes the new user to the collection of the users of the system
-
-console.log(database); //prints the database object that contains the users.
-
-theUsers.map(obj => {
-  console.log("username:" + obj.username + " , password: " + obj.password);
-});
-//console.log("The users: " + theUsers);
-//setErrorMessagesReg({ name: "unameReg", message: errorsReg.unameReg });
-} else {
-//user doesn't exist
-setErrorMessagesDel({ name: "unameDel", message: errorsDel.unameDel });
-}
-    } else {
-      //go to index
-      goToIndex();
-    }
-
-}; //handlesubmitCRE ends here
-
-const errorsDel = {
-  unameEdi: "invalid username. User Doesn't exist!",
-  passEdi: "invalid password"
-};
-
-  //=========== DELETE USER MECHANISM AREA CODE ENDS HERE =======================
-
-
-
-
+  
     //=========== TEST AND LOGOUT AREA CODE ================================
-    //Forces a login. for testing and development purposes.
+
+    async function stopSupervision() {
+    setUserInFocus(loggedUser);
+    setUserSupervised(loggedUser);
+  }
+
+
     async function forceLogin() {
-        setUseranme("Someone Logged In");
-        setIsSubmitted(true);
-        setLoggedIn(true);
-    }
+      setUseranme("Someone Logged In");
+      setLoggedUser({username:"dummyuser"});
+    setUserInFocus({username:"dummyuser"});
+    setUserSupervised({username:"dummyuser"});
+      setIsAdmin(false);
+      setLoggedIn(false);
+      setIsSubmitted(true);
+      setLoggedIn(true);
+  }
+
 
     //Logout mechanism. Not only for testing. We will keep it.
     //also it revokes admin privileges for obvious reasons.
@@ -515,6 +312,9 @@ const errorsDel = {
         setIsAdmin(false);
         setLoggedIn(false);
         setIsSubmitted(false);
+        setLoggedUser({username:"Visitor"});
+      setUserInFocus({username:"Visitor"});
+      setUserSupervised({username:"Visitor"});
         setPanel("index");
     
     }
@@ -522,8 +322,13 @@ const errorsDel = {
     //Grants admin privileges. for testing and development purposes.
     //also it logs the user in, fpr obvious reasons
     async function forceMakeAdmin() {
+      if(!loggedIn){
+        setLoggedUser({username:"dummyadmin"});
+      setUserInFocus({username:"dummyadmin"});
+      setUserSupervised({username:"dummyadmin"});
+      setLoggedIn(true);
+      }
         setIsSubmitted(true);
-        setLoggedIn(true);
         setIsAdmin(true);
     }
 
@@ -608,10 +413,13 @@ const errorsDel = {
 
     return (
         <section>
-            <h1>Test and LogOut Area</h1>
+            <h1 class="h1TestAndLogout">Test and LogOut Area</h1>
             <p>
             You are in the page: {panel}<br />
             Your name is: {username}<br />
+            The logged In user is: {(loggedUser != null)  ? loggedUser.username : ""}<br />
+            The supervised user is: {(userInFocus != null) ? userSupervised.username : ""}<br />
+            The user in focus is: {(userInFocus != null) ? userInFocus.username : ""}<br />
             {loggedIn ? "You are logged in": "You are NOT logged in"}<br />
             {isAdmin ? "You are an Admin": "You are NOT an Admin."}<br />
             {isSubmitted ? "User is in the system" : "user is NOT in the system"}
@@ -619,27 +427,32 @@ const errorsDel = {
             <pre>
                 {data && JSON.stringify(data, null, 2)}
             </pre>
-            <button onClick={fetchMeasurements}>Fetch Data</button>
-            <button onClick={postMeasurements}>Send Data</button>
-            <button onClick={forceLogin}>Forced log in</button>
-            <button onClick={logout}>Logout</button>
-            <button onClick={forceMakeAdmin}>Be Admin instantly</button>
-            <button onClick={forceRevokeAdmin}>Revoke Admin Privileges forcefully</button>
-            <button onClick={goToIndex}>Go to Index</button>
-            <button onClick={goToLogin}>Go to Log In</button>
-            <button onClick={goToRegistration}>Go to Registration</button>
-            <button onClick={goToAdminPanel}>Go to Admin Panel</button>
+            <button onClick={fetchMeasurements}><span>Fetch Data</span></button>
+            <button onClick={postMeasurements}><span>Send Data</span></button>
+            <button onClick={forceLogin}><span>Forced log in</span></button>
+            <button onClick={logout}><span>Logout</span></button>
+            <button onClick={forceMakeAdmin}><span>Be Admin instantly</span></button>
+            <button onClick={forceRevokeAdmin}><span>Revoke Admin Privileges forcefully</span></button>
+            <button onClick={goToIndex}><span>Go to Index</span></button>
+            <button onClick={goToLogin}><span>Go to Log In</span></button>
+            <button onClick={goToRegistration}><span>Go to Registration</span></button>
+            <button onClick={goToAdminPanel}><span>Go to Admin Panel</span></button>
             <br />
             <hr />
-            <h1>THE ACTUAL PAGE</h1>
+            <h1 class="theactualpage">THE ACTUAL PAGE</h1>
             <hr />
-            <span>Hello {username}</span>
+            <p>
+            <span id="hellousernamespan">Hello {username}</span>
             {isAdmin ? ", You are an Admin!": "!"}<br />
-            <button onClick={goToIndex}>Home</button>
-            <button onClick={goToLogin} style={{display: loggedIn ? 'none' : 'inline'}}>Log In</button>
-            <button onClick={goToRegistration} style={{display: loggedIn ? 'none' : 'inline'}}>Registration</button>
-            <button onClick={goToAdminPanel} style={{display: isAdmin ? 'inline' : 'none'}}>Admin Panel</button>
-            <button onClick={logout} style={{display: loggedIn ? 'inline' : 'none'}}>Logout</button>
+            {loggedUser.username!=userSupervised.username? "You are supervising " + userSupervised.username:""}<br />
+            </p>
+            <button onClick={goToIndex}><span>Home</span></button>
+            <button onClick={goToLogin} style={{display: loggedIn ? 'none' : 'inline'}}><span>Log In</span></button>
+            <button onClick={goToRegistration} style={{display: loggedIn ? 'none' : 'inline'}}><span>Registration</span></button>
+            <button onClick={goToAdminPanel} style={{display: isAdmin ? 'inline' : 'none'}}><span>Admin Panel</span></button>
+            <button onClick={goToEditTheProfile} style={{display: loggedIn ? 'inline' : 'none'}}><span>Edit Profile</span></button>
+            <button onClick={logout} style={{display: loggedIn ? 'inline' : 'none'}}><span>Logout</span></button>
+            <button onClick={stopSupervision} style={{display: loggedUser.username!=userSupervised.username ? 'inline' : 'none'}}><span>Stop supervising </span>{userSupervised.username}</button>
             <br />
             <section style={{display: panel =="login" ? 'block' : 'none'}}>
             <div className="form">
@@ -681,96 +494,71 @@ const errorsDel = {
      </form>
    </div>
    </section>
-
-   <section style={{display: panel =="adminpanel" ? 'block' : 'none'}}>
-            <h1>Admin Panel</h1>
-            <hr />
-            <h2 style={{display: isAdmin ? 'none' : 'inline'}}>Dafug Are you doing here man?</h2>
-            <p style={{display: isAdmin ? 'inline' : 'none'}}>Displaying a few users... blah... blah...</p>
-            <br />
-            <button onClick={goToCreateUser} style={{display: isAdmin ? 'inline' : 'none'}}>Create User</button>
-            <button onClick={goToEditUser} style={{display: isAdmin ? 'inline' : 'none'}}>Edit User</button>
-            <button onClick={goToDeleteUser}style={{display: isAdmin ? 'inline' : 'none'}}>Delete User</button>
+   <section style={{display: isAdmin ? 'block' : 'none'}}>   
+   <AdminPanel isAdmin = {isAdmin} 
+            theUsers = {theUsers} 
+            goToCreateUser = {goToCreateUser} 
+            goToEditUser = {goToEditUser}
+            goToDeleteUser = {goToDeleteUser} 
+            userInFocus = {userInFocus} 
+            userSupervised = {userSupervised}
+            panel = {panel} 
+            loggedIn = {loggedIn} 
+            username = {username} 
+            errorMessages = {errorMessages} 
+            errorMessagesCre = {errorMessagesCre}  
+            isSubmitted = {isSubmitted} 
+            setUserInFocus = {setUserInFocus} 
+            setUserSupervised = {setUserSupervised}
+            setPanel = {setPanel} 
+            setErrorMessages = {setErrorMessages} 
+            setErrorMessagesCre = {setErrorMessagesCre}  
+            setIsSubmitted = {setIsSubmitted}
+            database = {database}
+            loggedUser = {loggedUser} 
+            errorMessagesEdi = {errorMessagesEdi}  
+            setErrorMessagesEdi = {setErrorMessagesEdi}
+            errorMessagesDel = {errorMessagesDel}  
+            setErrorMessagesDel = {setErrorMessagesDel} 
+            />
    </section>
+   <EditTheProfile  loggedUser = {loggedUser} 
+        userInFocus = {userInFocus} 
+        panel = {panel} 
+        loggedIn = {loggedIn} 
+        isAdmin = {isAdmin} 
+        username = {username} 
+        theUsers = {theUsers}
+        errorMessages = {errorMessages} 
+        errorMessagesEdi = {errorMessagesEdi}  
+        isSubmitted = {isSubmitted} 
+        setUserInFocus = {setUserInFocus} 
+        setPanel = {setPanel} 
+        setErrorMessages = {setErrorMessages} 
+        setErrorMessagesEdi = {setErrorMessagesEdi}  
+        setIsSubmitted = {setIsSubmitted}
+        database = {database}
+        goToCreateUser = {goToCreateUser} 
+        goToDeleteUser = {goToDeleteUser}
+        userSupervised = {userSupervised}
+        setUserSupervised = {setUserSupervised}
+        />
 
-   <section style={{display: panel =="createuser" ? 'block' : 'none'}}>
-            <div className="form">
-            <h1>Create a User</h1>
-            <h3>This is an admin panel function</h3>
-            <button onClick={goToEditUser} style={{display: isAdmin ? 'inline' : 'none'}}>Edit User</button>
-            <button onClick={goToDeleteUser}style={{display: isAdmin ? 'inline' : 'none'}}>Delete User</button>
-            <hr />
-     <form onSubmit={handleSubmitCre}>
-       <div className="input-container">
-         <label>Username </label>
-         <input type="text" name="unameCre" required />
-         {renderErrorMessage("unameCre")}
-       </div>
-       <div className="input-container">
-         <label>Password </label>
-         <input type="password" name="passCre" required />
-         {renderErrorMessage("passCre")}
-       </div>
-       <div className="input-container">
-       <label>Set Admin </label>
-      <input type="checkbox" name="adminCre" value="true"/>
-    </div>
-       <div className="button-container">
-         <input type="submit" />
-       </div>
-     </form>
-   </div>
-   </section>
 
-   <section style={{display: panel =="edituser" ? 'block' : 'none'}}>
-            <div className="form">
-            <h1>Edit a User</h1>
-            <h3>This is an admin panel function</h3>
-            <button onClick={goToCreateUser} style={{display: isAdmin ? 'inline' : 'none'}}>Create User</button>
-            <button onClick={goToDeleteUser}style={{display: isAdmin ? 'inline' : 'none'}}>Delete User</button>
-            <hr />
-     <form onSubmit={handleSubmitEdi}>
-       <div className="input-container">
-         <label>Username </label>
-         <input type="text" name="unameEdi" required />
-         {renderErrorMessageEdi("unameEdi")}
-       </div>
-       <div className="input-container">
-         <label>Password </label>
-         <input type="password" name="passEdi" required />
-         {renderErrorMessageEdi("passEdi")}
-       </div>
-       <div className="input-container">
-       <label>Set Admin </label>
-      <input type="checkbox" name="adminEdi" value="true"/>
-    </div>
-       <div className="button-container">
-         <input type="submit" />
-       </div>
-     </form>
-   </div>
-   </section>
 
-   <section style={{display: panel =="deleteuser" ? 'block' : 'none'}}>
-            <div className="form">
-            <h1>Delete a User</h1>
-            <h3>This is an admin panel function</h3>
-            <button onClick={goToCreateUser} style={{display: isAdmin ? 'inline' : 'none'}}>Create User</button>
-            <button onClick={goToEditUser} style={{display: isAdmin ? 'inline' : 'none'}}>Edit User</button>
-            <hr />
-     <form onSubmit={handleSubmitDel}>
-       <div className="input-container">
-         <label>Username </label>
-         <input type="text" name="unameDel" required />
-         {renderErrorMessageDel("unameDel")}
-       </div>
+<section id='footer'>
+  <p>
+  <hr/>
+			2022 Typical Github License<br/>
+			LINKS
+      <br/>
+			|<a href="#">About us</a>||<a href="#">Contact us</a>||<a href="#">Q and A</a>|<br/>
+			<a href="https://github.com/Exarchias/FCAproject">The GitHub repository of this project</a><br/>
+			<hr/>
+      </p>
+			</section>
 
-       <div className="button-container">
-         <input type="submit" />
-       </div>
-     </form>
-   </div>
-   </section>
+
 
         </section>
     )

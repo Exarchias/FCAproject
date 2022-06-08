@@ -80,7 +80,7 @@ const errorsEdi = {
             <hr />
      <form id="edittheprofile" onSubmit={handleSubmitEdi}>
        <div className="input-container">
-         <label>Username: {prop.userInFocus.username} </label>
+         <label>Username: {prop.userSupervised.username} </label>
          {renderErrorMessageEdi("unameEdi")}
        </div>
        <div className="input-container">
