@@ -4,12 +4,14 @@ import CreateUser from "./CreateUser";
 import DeleteUser from "./DeleteUser";
 import EditUser from "./EditUser";
 import EditTheProfile from "./EditTheProfile";
+import FcaCrud from "./FcaCrud";
 
 function Measurements() {
     const [data, setData] = useState();
     const [theUsers, setTheUsers] = useState([]);
     const [loggedUser, setLoggedUser] = useState({username:"Visitor"}); //The user that is logged in
     const [userInFocus, setUserInFocus] = useState({username:"Visitor"}); //The same as logged user apart when the user is selected, (eg for edit)
+    const [itemInFocus, setItemInFocus] = useState({username:"Visitor"});
     const [userSupervised, setUserSupervised] = useState({username:"Visitor"}); //The same as logged user apart when admin works in god mode.
     const [panel, setPanel] = useState("index"); //for changing panel mechanism
     document.title = "Welcome to " + panel; //setting the title
@@ -32,9 +34,7 @@ function Measurements() {
       //loading the users
       if(theUsers.length == 0){
         database.map(obj => {
-          theUsers.push({username: obj.username,
-          password: obj.password,
-          admin: obj.admin});
+          theUsers.push(obj);
           });
       
       } //end  if(theUsers.length == 0)
@@ -73,6 +73,50 @@ function Measurements() {
         loadTheUsers();
         setPanel("dashboard");
         document.title = "Welcome to " + panel; //setting the title
+    }
+
+    async function goToFcaCrud() {
+      if(loggedIn){
+        loadTheUsers();
+
+        setPanel("fcacrud");
+      } else {
+        setPanel("index");
+      }
+      document.title = "Welcome to " + panel; //setting the title
+    }
+
+    async function goToCreateFca() {
+      if(loggedIn){
+        loadTheUsers();
+
+        setPanel("createfca");
+      } else {
+        setPanel("index");
+      }
+      document.title = "Welcome to " + panel; //setting the title
+    }
+
+    async function goToEditFca() {
+      if(loggedIn){
+        loadTheUsers();
+
+        setPanel("editfca");
+      } else {
+        setPanel("index");
+      }
+      document.title = "Welcome to " + panel; //setting the title
+    }
+
+    async function goToDeleteFca() {
+      if(loggedIn){
+        loadTheUsers();
+
+        setPanel("deletefca");
+      } else {
+        setPanel("index");
+      }
+      document.title = "Welcome to " + panel; //setting the title
     }
 
     async function goToAdminPanel() {
@@ -148,11 +192,10 @@ function Measurements() {
           
           //theUsers.push("fuck you!");
           //console.log("The users: " + theUsers);
+
         if(theUsers.length == 0){
           database.map(obj => {
-            theUsers.push({username: obj.username,
-            password: obj.password,
-            admin: obj.admin});
+            theUsers.push(obj);
             });
 
           theUsers.map(obj => {
@@ -196,12 +239,36 @@ function Measurements() {
     {
       username: "user1",
       password: "pass1",
-      admin: "true"
+      admin: "true",
+      items: [
+        {
+          username: "item1",
+          password: "nopass",
+          admin: "false"
+        },
+        {
+          username: "item2",
+          password: "nopass",
+          admin: "false"
+        }
+      ]
     },
     {
       username: "user2",
       password: "pass2",
-      admin: "false"
+      admin: "false",
+      items: [
+        {
+          username: "item1",
+          password: "nopass",
+          admin: "false"
+        },
+        {
+          username: "item2",
+          password: "nopass",
+          admin: "false"
+        }
+      ]
     }
   ];
   
@@ -251,9 +318,7 @@ if (userDataReg) {
   
   if(theUsers.length == 0){
     database.map(obj => {
-      theUsers.push({username: obj.username,
-      password: obj.password,
-      admin: obj.admin});
+      theUsers.push(obj);
       });
 
 
@@ -265,7 +330,20 @@ if (userDataReg) {
   theUsers.push({
     username: unameReg.value,
     password: passReg.value,
-    admin: "false"
+    admin: "false",
+    //it will need a loop for the items. No time to fix that today.
+    items: [
+      {
+        username: "item1",
+        password: "nopass",
+        admin: "false"
+      },
+      {
+        username: "item2",
+        password: "nopass",
+        admin: "false"
+      }
+    ]
   });
 
   //setTheUsers(database); //passes the new user to the collection of the users of the system
@@ -295,9 +373,51 @@ if (userDataReg) {
 
     async function forceLogin() {
       setUseranme("Someone Logged In");
-      setLoggedUser({username:"dummyuser"});
-    setUserInFocus({username:"dummyuser"});
-    setUserSupervised({username:"dummyuser"});
+      setLoggedUser({username:"dummyuser", 
+      password: "12345",
+      admin: "true",
+      items: [
+        {
+          username: "item1",
+          password: "nopass",
+          admin: "false"
+        },
+        {
+          username: "item2",
+          password: "nopass",
+          admin: "false"
+        }
+      ]});
+    setUserInFocus({username:"dummyuser", 
+    password: "12345",
+    admin: "true",
+    items: [
+      {
+        username: "item1",
+        password: "nopass",
+        admin: "false"
+      },
+      {
+        username: "item2",
+        password: "nopass",
+        admin: "false"
+      }
+    ]});
+    setUserSupervised({username:"dummyuser", 
+    password: "12345",
+    admin: "true",
+    items: [
+      {
+        username: "item1",
+        password: "nopass",
+        admin: "false"
+      },
+      {
+        username: "item2",
+        password: "nopass",
+        admin: "false"
+      }
+    ]});
       setIsAdmin(false);
       setLoggedIn(false);
       setIsSubmitted(true);
@@ -323,9 +443,51 @@ if (userDataReg) {
     //also it logs the user in, fpr obvious reasons
     async function forceMakeAdmin() {
       if(!loggedIn){
-        setLoggedUser({username:"dummyadmin"});
-      setUserInFocus({username:"dummyadmin"});
-      setUserSupervised({username:"dummyadmin"});
+        setLoggedUser({username:"dummyadmin", 
+        password: "12345",
+        admin: "true",
+        items: [
+          {
+            username: "item1",
+            password: "nopass",
+            admin: "false"
+          },
+          {
+            username: "item2",
+            password: "nopass",
+            admin: "false"
+          }
+        ]});
+      setUserInFocus({username:"dummyadmin", 
+      password: "12345",
+      admin: "true",
+      items: [
+        {
+          username: "item1",
+          password: "nopass",
+          admin: "false"
+        },
+        {
+          username: "item2",
+          password: "nopass",
+          admin: "false"
+        }
+      ]});
+      setUserSupervised({username:"dummyadmin", 
+      password: "12345",
+      admin: "true",
+      items: [
+        {
+          username: "item1",
+          password: "nopass",
+          admin: "false"
+        },
+        {
+          username: "item2",
+          password: "nopass",
+          admin: "false"
+        }
+      ]});
       setLoggedIn(true);
       }
         setIsSubmitted(true);
@@ -437,6 +599,7 @@ if (userDataReg) {
             <button onClick={goToLogin}><span>Go to Log In</span></button>
             <button onClick={goToRegistration}><span>Go to Registration</span></button>
             <button onClick={goToAdminPanel}><span>Go to Admin Panel</span></button>
+            <button onClick={goToFcaCrud}><span>Go to FCA Files' Panel</span></button>
             <br />
             <hr />
             <h1 class="theactualpage">THE ACTUAL PAGE</h1>
@@ -451,6 +614,7 @@ if (userDataReg) {
             <button onClick={goToRegistration} style={{display: loggedIn ? 'none' : 'inline'}}><span>Registration</span></button>
             <button onClick={goToAdminPanel} style={{display: isAdmin ? 'inline' : 'none'}}><span>Admin Panel</span></button>
             <button onClick={goToEditTheProfile} style={{display: loggedIn ? 'inline' : 'none'}}><span>Edit Profile</span></button>
+            <button onClick={goToFcaCrud} style={{display: loggedIn ? 'inline' : 'none'}}><span>Manage your FCA files</span></button>
             <button onClick={logout} style={{display: loggedIn ? 'inline' : 'none'}}><span>Logout</span></button>
             <button onClick={stopSupervision} style={{display: loggedUser.username!=userSupervised.username ? 'inline' : 'none'}}><span>Stop supervising </span>{userSupervised.username}</button>
             <br />
@@ -509,6 +673,36 @@ if (userDataReg) {
             errorMessagesCre = {errorMessagesCre}  
             isSubmitted = {isSubmitted} 
             setUserInFocus = {setUserInFocus} 
+            setUserSupervised = {setUserSupervised}
+            setPanel = {setPanel} 
+            setErrorMessages = {setErrorMessages} 
+            setErrorMessagesCre = {setErrorMessagesCre}  
+            setIsSubmitted = {setIsSubmitted}
+            database = {database}
+            loggedUser = {loggedUser} 
+            errorMessagesEdi = {errorMessagesEdi}  
+            setErrorMessagesEdi = {setErrorMessagesEdi}
+            errorMessagesDel = {errorMessagesDel}  
+            setErrorMessagesDel = {setErrorMessagesDel} 
+            />
+   </section>
+   <section style={{display: loggedIn ? 'block' : 'none'}}>   
+   <FcaCrud isAdmin = {isAdmin} 
+            theUsers = {theUsers} 
+            goToCreateFca = {goToCreateFca} 
+            goToEditFca = {goToEditFca}
+            goToDeleteFca = {goToDeleteFca} 
+            userInFocus = {userInFocus} 
+            itemInFocus = {itemInFocus} 
+            userSupervised = {userSupervised}
+            panel = {panel} 
+            loggedIn = {loggedIn} 
+            username = {username} 
+            errorMessages = {errorMessages} 
+            errorMessagesCre = {errorMessagesCre}  
+            isSubmitted = {isSubmitted} 
+            setUserInFocus = {setUserInFocus}
+            setItemInFocus = {setItemInFocus} 
             setUserSupervised = {setUserSupervised}
             setPanel = {setPanel} 
             setErrorMessages = {setErrorMessages} 
