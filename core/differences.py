@@ -133,7 +133,7 @@ def get_and_save_diff(sample1, sample2):
        for j in range(numcols):
             diffArray[i][j] = abs(dataxy1[j] - dataxy2[j])
             
-    filename = getfileno(sample1) + "-" + getfileno(sample2)
+    filename = get_file_no(sample1) + "-" + get_file_no(sample2)
     save_diff_data(filename, diffArray, numrows, numcols)
 
 ####################################################    
