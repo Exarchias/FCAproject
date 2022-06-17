@@ -16,8 +16,8 @@ This code calculates the difference between gated samples according to the follo
 The number of files is N(N-1)/2 where N is the number of samples in the directory
 """
 
-rawdatadir = '/home/dave/codes/python/FlowCytometryTools-master/data/gated/'  #input files
-diffdatadir = '/home/dave/codes/python/FlowCytometryTools-master/data/diff/'  #output files
+rawdatadir = './data/gated/'  #input files
+diffdatadir = './data/diff/'  #output files
 
 import os  
 import pandas as pd 
@@ -32,8 +32,8 @@ Name        = save_diff_data
 Input arguments      = 
     outfile = destination file
     dataf   = frame containing data to be saved
-    xbin    = number of rows
-    ybin    = number of columns
+    xbin    = number of column
+    ybin    = number of rows
 Returns     = NONE
 
 Used local vaiables    = 
