@@ -92,8 +92,9 @@ Used local variables    =
     fno = integer value (sequence) in the file name. For example, the file name -sample_47_may.fcs' returns 47.  
 """
 def get_file_no(filename):
-    leftstr = filename.split('-')[0]
-    fno = leftstr.split('_')[4]
+    leftstr = filename.split('.')[0]
+    print(leftstr)
+    fno = leftstr.split('_')[1]
     return fno
 
 ####################################################    
@@ -131,7 +132,17 @@ def get_and_save_diff(sample1, sample2):
        dataxy1 = dframe1.iloc[i]
        dataxy2 = dframe2.iloc[i]        
        for j in range(numcols):
-            diffArray[i][j] = abs(dataxy1[j] - dataxy2[j])
+            if(type(dataxy1[j]) is not int):
+               numxy1 = 0
+            else:
+               numxy1 = int(dataxy1[j])
+
+            if (type(dataxy2[j]) is not int):
+                numxy2 = 0
+            else:
+                numxy2 = int(dataxy2[j])
+
+            diffArray[i][j] = abs(numxy1 - numxy2)
             
     filename = get_file_no(sample1) + "-" + get_file_no(sample2)
     save_diff_data(filename, diffArray, numrows, numcols)

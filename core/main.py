@@ -10,7 +10,7 @@ import numpy as np
 #This method tests the differences module.
 def testDifferences():
     print(differences.filelist)
-    df = differences.read_data("rawfcsdata.txt")
+    df = differences.read_data("-rawfcsdata_1_june.txt")
     print(df.head)
 
     #Remember: columns fitst, (xbin), raws after it, (ybin)
@@ -20,6 +20,7 @@ def testDifferences():
     xbin    = number of column
     ybin    = number of rows"""
     differences.save_diff_data("testSavedDiff", df, 1, 11298)
+    differences.get_and_save_diff("-rawfcsdata_1_june.txt", "-rawfcsdata_2_june.txt")
 
 
 # Press the green button in the gutter to run the script.
