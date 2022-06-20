@@ -22,8 +22,8 @@ import pandas as pd
 import numpy as np
 from pandas import read_csv
 
-rawdatadir = '/home/dave/codes/python/FlowCytometryTools-master/data/raw/'
-transformeddatadir = '/home/dave/codes/python/FlowCytometryTools-master/data/transformed/'
+rawdatadir = './data/raw/'
+transformeddatadir = './data/transformed/'
 
 ####################################################    
 """
