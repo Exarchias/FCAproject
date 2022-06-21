@@ -143,3 +143,30 @@ If you want, you can modify the above code as follows (after selecting the chann
     savedataclassic(data3,'transformdata.csv')
     print('Transform Data Saved...')
 """
+
+# Using that as for the testing function on main.
+# It does the same things as when we run the module itself.
+def run_fcsprep():
+    ichannelx = 4  # FL-1
+    ichannely = 6  # FL-3
+
+    filelist = os.listdir(rawdatadir)
+
+    for longfilename in filelist:
+        print("Reading .fcs file ", longfilename)
+        shortfilename = longfilename.split('.')[0]
+        sample = read_data(longfilename)
+
+        channelnames = sample.channel_names
+        channelx = channelnames[int(ichannelx) - 1]
+        channely = channelnames[int(ichannely) - 1]
+
+        # tsample = sample.transform('hlog', channels=[channelx, channely], b=1000.0)
+        # Transformation is selected in the FE
+
+        data1 = sample.data[channelx]
+        data2 = sample.data[channely]
+        data3 = pd.concat([data1, data2], axis=1)
+        outfile = shortfilename + 'out.csv'
+        save_data_file(data3, outfile)
+        print('Raw Data Saved...', outfile)

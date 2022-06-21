@@ -5,8 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="4a544e91-f180-4474-b1ec-01145ae280bf" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/fcsprep-step1.py" beforeDir="false" afterPath="$PROJECT_DIR$/fcsprep-step1.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/fcsprep-step1.py" beforeDir="false" afterPath="$PROJECT_DIR$/fcsprepstep1.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -35,8 +34,8 @@
     &quot;last_opened_file_path&quot;: &quot;C:/Users/rober/anaconda3/envs/fcaprojectold&quot;
   }
 }</component>
-  <component name="RunManager" selected="Python.fcsprep-step1">
-    <configuration name="fcsprep-step1" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+  <component name="RunManager" selected="Python.fcsprepstep1">
+    <configuration name="fcsprepstep1" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="core" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -48,7 +47,7 @@
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/fcsprep-step1.py" />
+      <option name="SCRIPT_NAME" value="C:\Users\rober\Documents\GitHub\secreStepFCArepo\The actual project\content to commit\core\fcsprepstep1.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -80,7 +79,7 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Python.fcsprep-step1" />
+        <item itemvalue="Python.fcsprepstep1" />
       </list>
     </recent_temporary>
   </component>
@@ -94,5 +93,16 @@
       <updated>1655258912147</updated>
     </task>
     <servers />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
   </component>
 </project>
