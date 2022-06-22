@@ -132,17 +132,10 @@ def get_and_save_diff(sample1, sample2):
        dataxy1 = dframe1.iloc[i]
        dataxy2 = dframe2.iloc[i]        
        for j in range(numcols):
-            if(type(dataxy1[j]) is not int):
-               numxy1 = 0
-            else:
-               numxy1 = int(dataxy1[j])
+        numxy1 = int(dataxy1[j])
+        numxy2 = int(dataxy2[j])
 
-            if (type(dataxy2[j]) is not int):
-                numxy2 = 0
-            else:
-                numxy2 = int(dataxy2[j])
-
-            diffArray[i][j] = abs(numxy1 - numxy2)
+        diffArray[i][j] = abs(numxy1 - numxy2)
             
     filename = get_file_no(sample1) + "-" + get_file_no(sample2)
     save_diff_data(filename, diffArray, numrows, numcols)
