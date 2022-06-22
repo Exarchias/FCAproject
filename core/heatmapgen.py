@@ -17,9 +17,9 @@ If the data contains negative values, then the range is the difference between t
 """
 
 BINWIDTH = 100
-rawdatadir = '/home/dave/codes/python/FlowCytometryTools-master/data/transformed/'
-heatmapdatadir = '/home/dave/codes/python/FlowCytometryTools-master/data/heatmap/'
-gateddatadir = '/home/dave/codes/python/FlowCytometryTools-master/data/gated/'
+rawdatadir = './data/transformed/'
+heatmapdatadir = './data/heatmap/'
+gateddatadir = './data/gated/'
 
 import os
 import pandas as pd
