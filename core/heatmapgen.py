@@ -196,6 +196,14 @@ Used local variables    =
     shortfilename   = filename without extension (before the .) 
     dframe          = data frame retrieved from file
 """
+
+def run_heatmapgen():
+    filelist = os.listdir(rawdatadir)
+
+    for longfilename in filelist:
+        dframe = read_data(longfilename)
+        shortfilename = longfilename.split('out.')[0]
+        generate_map(dframe, shortfilename)
         
 filelist = os.listdir(rawdatadir)
 

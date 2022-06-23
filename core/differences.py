@@ -156,6 +156,23 @@ Used local variables    =
     samplesize  = number of files in folder
     i, j, k     = loop counters
 """
+
+def run_differences():
+    filelist = os.listdir(rawdatadir)  # retrieve file names
+    samplesize = len(filelist)  # get the number of files and print the list
+    for i in range(samplesize):
+        print(i, filelist[i])
+
+    print("Sample Size = ", samplesize, "\n")
+    k = 0
+    for i in range(samplesize):
+        for j in range(i + 1, samplesize):
+            get_and_save_diff(filelist[i], filelist[j])
+            print(i, "-", j)
+            k = k + 1
+    print("Total number of inter-file difference computations:- ", k)
+
+
 filelist  = os.listdir(rawdatadir)  #retrieve file names
 samplesize = len(filelist)          #get the number of files and print the list
 for i in range(samplesize):
@@ -169,3 +186,4 @@ for i in range(samplesize):
         print(i,"-",j)
         k=k+1
 print("Total number of inter-file difference computations:- ", k)
+

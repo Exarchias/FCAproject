@@ -6,31 +6,9 @@
   <component name="ChangeListManager">
     <list default="true" id="4a544e91-f180-4474-b1ec-01145ae280bf" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/diff/1-2-diff.csv" beforeDir="false" afterPath="$PROJECT_DIR$/data/diff/1-2-diff.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/diff/testSavedDiff-diff.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/gated/-rawfcsdata_1_june.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/gated/-rawfcsdata_2_june.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/gated/A02 Kranvatten Augusti SYBR-gate.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/gated/A02 Kranvatten kvall SYBR-gate.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/gated/A03 Kranvatten Mars SYBR-gate.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/gated/A03 Kranvatten morgon SYBR-gate.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/gated/A05 Kranvatten Sept SYBR -gate.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/heatmap/A02 Kranvatten Augusti SYBR-hm.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/heatmap/A02 Kranvatten kvall SYBR-hm.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/heatmap/A03 Kranvatten Mars SYBR-hm.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/heatmap/A03 Kranvatten morgon SYBR-hm.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/heatmap/A05 Kranvatten Sept SYBR -hm.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/raw/A02 Kranvatten Augusti SYBR.fcs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/raw/A02 Kranvatten kvall SYBR.fcs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/raw/A03 Kranvatten Mars SYBR.fcs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/raw/A03 Kranvatten morgon SYBR.fcs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/raw/A05 Kranvatten Sept SYBR .fcs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/transformed/A02 Kranvatten Augusti SYBRout.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/transformed/A02 Kranvatten kvall SYBRout.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/transformed/A03 Kranvatten Mars SYBRout.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/transformed/A03 Kranvatten morgon SYBRout.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/transformed/A05 Kranvatten Sept SYBR out.csv" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/differences.py" beforeDir="false" afterPath="$PROJECT_DIR$/differences.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/heatmapgen.py" beforeDir="false" afterPath="$PROJECT_DIR$/heatmapgen.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -58,7 +36,7 @@
     &quot;last_opened_file_path&quot;: &quot;C:/Users/rober/anaconda3/envs/fcaprojectold&quot;
   }
 }</component>
-  <component name="RunManager" selected="Python.differences">
+  <component name="RunManager" selected="Python.main">
     <configuration name="differences" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="core" />
       <option name="INTERPRETER_OPTIONS" value="" />
